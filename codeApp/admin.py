@@ -1,0 +1,21 @@
+from django.contrib import admin
+from .models import Peraturan
+
+class PeraturanAdmin(admin.ModelAdmin):
+    list_display = ('judul', 'created_at')
+    search_fields = ('judul',)
+
+    def has_module_permission(self, request):
+        """Izinkan akses hanya untuk grup tertentu"""
+        return request.user.is_superuser or request.user.groups.filter(name="admin-berkas").exists()
+
+    def has_add_permission(self, request):
+        return request.user.is_superuser or request.user.groups.filter(name="admin-berkas").exists()
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser or request.user.groups.filter(name="admin-berkas").exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser or request.user.groups.filter(name="admin-berkas").exists()
+
+admin.site.register(Peraturan, PeraturanAdmin)
