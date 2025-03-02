@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import cari_peraturan
+from .views import *
 
 urlpatterns = [
-    path("", cari_peraturan, name="cari_peraturan"),
+    path('', dashboard, name="dashboard"),
+    path("cari/", cari_peraturan, name="cari_peraturan"),
 ]
