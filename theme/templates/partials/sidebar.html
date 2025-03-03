@@ -1,0 +1,26 @@
+<!-- Sidebar -->
+<div
+  id="sidebar"
+  class="fixed top-0 right-0 w-64 h-full bg-gray-900 text-white transform translate-x-full transition-transform duration-300 ease-in-out"
+>
+  <button
+    class="text-white text-2xl absolute top-5 right-5"
+    onclick="toggleSidebar()"
+  >
+    <i class="fas fa-times"></i>
+  </button>
+  <ul class="mt-16 px-6 space-y-4">
+    <li><a href="/cari/" class="block py-2">Beranda</a></li>
+    <li><a href="/cari/" class="block py-2">Profil</a></li>
+    <li><a href="/cari/" class="block py-2">Rancangan Hukum</a></li>
+    <li><a href="/cari/" class="block py-2">Kategori</a></li>
+    <li><a href="/cari/" class="block py-2">Hubungi Kami</a></li>
+  </ul>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("translate-x-full");
+  }
+</script>

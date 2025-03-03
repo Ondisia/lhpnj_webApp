@@ -1,48 +1,73 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% comment %} {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>{{ title }}</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
-    <link
-      rel="shortcut icon"
-      href="{% static 'img/nj.png' %}"
-      type="image/x-icon"
-    />
-  </head>
-
-  <body style="background-color: #f4f4f4">
-    <nav class="mt-80">
-      <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 bg-gray-800">
-        <div class="relative flex items-center justify-between h-16">
-          <div
-            class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
-          >
-            <div class="flex items-center">
-              <a
-                href="/"
-                class="text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                LHP Pondok Pesantren Nurul Jadid
-              </a>
-            </div>
-            <div class="hidden sm:block sm:ml-6">
-              <div class="flex space-x-4">
-                <a
-                  href="/cari/"
-                  class="text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
-                  >Cari Peraturan</a
-                >
-              </div>
-            </div>
-          </div>
+{% block content %}
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-x-12 gap-y-4 px-20">
+    <div class="bg-shortMenu h-32 rounded-b-lg flex items-center">
+        <div class="bg-shortMenuIcon rounded-bl-lg w-24 h-32 flex-none flex items-center justify-center p-4">
+            <img src="{% static 'img/dash/people.png' %}" alt="" class="h-20">
         </div>
-      </div>
-    </nav>
-  </body>
-</html> {% endcomment %}
+        
+        <div class="text-lg p-5 text-center">
+            Keputusan Dewan Pengasuh & Pengasuh
+        </div>
+    </div>
+    <div class="bg-shortMenu h-32 rounded-b-lg flex items-center">
+        <div class="bg-shortMenuIcon rounded-bl-lg w-24 h-32 flex-none flex items-center justify-center p-2">
+            <img src="{% static 'img/dash/hammer.png' %}" alt="" class="h-20 w-20">
+        </div>
+        
+        <div class="text-lg p-5 text-center">
+            Peraturan Kepala Pesantren
+        </div>
+    </div>
+    <div class="bg-shortMenu h-32 rounded-b-lg flex items-center">
+        <div class="bg-shortMenuIcon rounded-bl-lg w-24 h-32 flex-none flex items-center justify-center">
+            <img src="{% static 'img/dash/paper.png' %}" alt="" class="h-20">
+        </div>
+        
+        <div class="text-lg p-5 text-center">
+            Peraturan Biro, Badan, dan Banom
+        </div>
+    </div>
+    <div class="bg-shortMenu h-32 rounded-b-lg flex items-center">
+        <div class="bg-shortMenuIcon rounded-bl-lg w-24 h-32 flex-none flex items-center justify-center p-3">
+            <img src="{% static 'img/dash/shield.png' %}" alt="" class="h-20">
+        </div>
+        
+        <div class="text-lg p-5 text-center">
+            Peraturan Satuan Pendidikan
+        </div>
+    </div>
+    <div class="bg-shortMenu h-32 rounded-b-lg flex items-center">
+        <div class="bg-shortMenuIcon rounded-bl-lg w-24 h-32 flex-none flex items-center justify-center">
+            <img src="{% static 'img/dash/paper-checklist.png' %}" alt="" class="h-20">
+        </div>
+        
+        <div class="text-lg p-5 text-center">
+            Standard Operating Procedure (SOP)
+        </div>
+    </div>
+    <div class="bg-shortMenu h-32 rounded-b-lg flex items-center">
+        <div class="bg-shortMenuIcon rounded-bl-lg w-24 h-32 flex-none flex items-center justify-center p-2">
+            <img src="{% static 'img/dash/clipart.png' %}" alt="" class="h-16">
+        </div>
+        
+        <div class="text-lg p-5 text-center">
+            Kompilasi Peraturan Pesantren
+        </div>
+    </div>
+</div>
+<hr class="mt-8 mb-2 border-t-4 border-black" />
+<div class="text-center font-serif font-inria ">
+    <p class="text-4xl underline decoration-2 underline-offset-4">INFORMASI UMUM</p>
+    <p class="text-xl underline decoration-2 underline-offset-4">--Terbaru--</p>
+</div>
+<div class="flex justify-center">
+    <div class="bg-box h-32 w-64 mr-4 rounded-lg" style="flex: 1">1</div>
+    <div class="bg-box h-32 w-64 mr-4 rounded-lg" style="flex: 1">2</div>
+    <div class="bg-box h-32 w-64 mr-4 rounded-lg" style="flex: 1">3</div>
+    <div class="bg-box h-32 w-64 mr-4 rounded-lg" style="flex: 1">4</div>
+    <div class="bg-box h-32 w-64 rounded-lg" style="flex: 1">5</div>
+</div>
+{% endblock content %}

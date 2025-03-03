@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencarian Peraturan</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h2>Pencarian Peraturan</h2>
     <form method="GET">
         {{ form.as_p }}
@@ -25,5 +19,5 @@
     {% else %}
         <p>Tidak ada hasil ditemukan.</p>
     {% endif %}
-</body>
-</html>
+
+{% endblock content %}

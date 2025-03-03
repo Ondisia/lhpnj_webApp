@@ -47,6 +47,9 @@ module.exports = {
                 navBlue : "#408089",
                 navBlueLight : "#3A848F",
                 navGray : "#8BA4A8",
+                shortMenu : "#070A181F",
+                shortMenuIcon : "#6F6F6F1F",
+                labelTabel : "#243634",
             }
         },
     },

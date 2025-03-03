@@ -6,6 +6,7 @@ from .forms import PencarianForm
 def dashboard(request):
     jeda = {
         'title': "LHP Pondok Pesantren Nurul Jadid",
+        'menu': 'dashboard',
     }    
     return render(request, "dashboard.html", jeda)
 

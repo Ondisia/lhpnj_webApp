@@ -1,20 +1,31 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+  <head>
     <title>{{ title }}</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		{% tailwind_css %}
-		<link rel="shortcut icon" href="{% static 'img/nj.png' %}" type="image/x-icon">
-	</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+    <link
+      rel="shortcut icon"
+      href="{% static 'img/nj.png' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  </head>
 
-	<body style="background-color: #F4F4F4;">
-		{% include 'partials/navbar.html' %}
-		<div class="container mx-auto">
-			{% block content %}
-			{% endblock %}
-		</div>
-	</body>
+  <body style="background-color: #f4f4f4">
+    {% if menu == 'dashboard' %}
+		  {% include 'partials/navbar_dashboard.html' %}
+    {% else %}
+		  {% include 'partials/navbar.html' %}
+	  {% endif %}
+    {% include 'partials/sidebar.html' %}
+
+
+    <div class="container mt-8 mx-auto">
+		{% block content %} {% endblock %}
+	  </div>
+  </body>
 </html>
