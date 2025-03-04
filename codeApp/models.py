@@ -7,14 +7,31 @@ class Peraturan(models.Model):
         ('tidak berlaku', 'Tidak Berlaku'),
     ]
 
-    nomor_peraturan = models.CharField(max_length=50, blank=True, null=True)
+  
+    KATEGORI_CHOICES = [
+        ('kdp', 'Keputusan Dewan Pengasuh & Pengasuh'),
+        ('pkp', 'Peraturan Kepala Pesantren'),
+        ('pbb', 'Peraturan Biro, Badan & Banom'),
+        ('psp', 'Peraturan Satuan Pendidikan'),
+        ('sop', 'Standard Operating Procedure'),
+        ('kpp', 'Kompilasi Peraturan Pesantren'),
+        ('kp', 'Keputusan Pimpinan'),
+        ('rc', 'Rancangan Hukum'),
+    ]
+
+
+
+    nomor_peraturan = models.CharField(max_length=50, default='-')
     nama_peraturan = models.CharField(max_length=255)
+    kategori_peraturan = models.CharField(max_length=50, choices=KATEGORI_CHOICES, default='rc')
+    lembar_pesantren = models.BooleanField(default=False)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='berlaku')
     tahun = models.IntegerField(blank=True, null=True)
     kata_kunci = models.CharField(max_length=255, blank=True, null=True)
     file_pdf = models.FileField(upload_to="peraturan/")
     teks_pdf = models.TextField(blank=True, null=True)  # Simpan teks hasil ekstraksi
     created_at = models.DateTimeField(auto_now_add=True)
+  
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # Simpan file terlebih dahulu

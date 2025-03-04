@@ -12,20 +12,59 @@
       href="{% static 'img/nj.png' %}"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
   </head>
 
   <body style="background-color: #f4f4f4">
+    {% include 'partials/navbar_dashboard.html' %} {%include 'partials/sidebar.html' %}
+    <div class="container mt-8 mx-auto">{% block content %} {% endblock %}</div>
+
     {% if menu == 'dashboard' %}
-		  {% include 'partials/navbar_dashboard.html' %}
-    {% else %}
-		  {% include 'partials/navbar.html' %}
-	  {% endif %}
-    {% include 'partials/sidebar.html' %}
+    <div
+      class="bg-coAbout w-full h-40 text-white items-center flex flex-col justify-center sm:px-0 px-4"
+    >
+      <p
+        class="font-serif font-inria text-2xl underline decoration-2 underline-offset-4"
+      >
+        TENTANG WEBSITE
+      </p>
+      <p class="text-center sm:text-lg text-md">
+        Menampilkan Informasi Tentang Lembar Hukum Pesantren
+      </p>
+      <p class="text-center sm:text-lg text-md">
+        Pondok Pesantren Nurul Jadid Paiton Probolinggo
+      </p>
+    </div>
+    {% endif %}
 
-
-    <div class="container mt-8 mx-auto">
-		{% block content %} {% endblock %}
-	  </div>
+    <footer class="w-full bg-gray-100 py-6 h-60 flex items-center">
+      <div class="w-4/5 mx-auto">
+        <!-- Header Alamat & Kontak tetap sejajar di semua ukuran layar -->
+        <div class="grid grid-cols-2 border-b-2 border-gray-600 pb-2">
+          <div class="text-center font-bold">Alamat Kami</div>
+          <div class="text-center font-bold">Kontak Kami</div>
+        </div>
+        
+        <!-- Isi Alamat dan Kontak tetap dalam dua kolom -->
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <!-- Alamat -->
+          <div class="flex items-start gap-2 px-4">
+            <img src="{% static 'img/dash/home.png' %}" class="w-10" alt="Home Icon">
+            <span>
+              Jl. KH. Zaini Mun'im, Desa Karanganyar, Kecamatan Paiton, Kabupaten Probolinggo, Kode Pos: 67291
+            </span>
+          </div>
+          
+          <!-- Kontak (Agar ikon dan nomor telepon sejajar dengan "Kontak Kami") -->
+          <div class="flex sm:items-center items-start justify-center gap-2 px-4">
+            <img src="{% static 'img/dash/phone.png' %}" class="w-10" alt="Phone Icon">
+            <span class="mt-2">085231968622</span>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

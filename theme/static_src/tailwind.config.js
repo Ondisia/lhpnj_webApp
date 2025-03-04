@@ -50,6 +50,7 @@ module.exports = {
                 shortMenu : "#070A181F",
                 shortMenuIcon : "#6F6F6F1F",
                 labelTabel : "#243634",
+                coAbout : "#1C626C",
             }
         },
     },

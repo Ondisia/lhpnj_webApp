@@ -10,11 +10,23 @@
     <i class="fas fa-times"></i>
   </button>
   <ul class="mt-16 px-6 space-y-4">
-    <li><a href="/cari/" class="block py-2">Beranda</a></li>
-    <li><a href="/cari/" class="block py-2">Profil</a></li>
-    <li><a href="/cari/" class="block py-2">Rancangan Hukum</a></li>
-    <li><a href="/cari/" class="block py-2">Kategori</a></li>
-    <li><a href="/cari/" class="block py-2">Hubungi Kami</a></li>
+    <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'dashboard' %}bg-white text-gray-900 font-bold{% endif %}"><a href="/cari/" class="block py-2 ml-6">Beranda</a></li>
+    <li class="hover:bg-white hover:text-gray-900 hover:font-bold"><a href="/cari/" class="block py-2 ml-6">Profil</a></li>
+    <li class="hover:bg-white hover:text-gray-900 relative">
+      <a href="#" onclick="toggleSubMenu(event)" class="block py-2 ml-6 hover:text-gray-900 hover:font-bold">Dokumen Hukum</a>
+      <ul class="pl-6 space-y-2 hidden pb-3" id="submenu">
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Keputusan Dewan Pengasuh & Pengasuh</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Peraturan Kepala Pesantren</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Peraturan Biro, Badan & Banom</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Peraturan Satuan Pendidikan</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Standard Operating Procedure</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Kompilasi Peraturan Pesantren</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Keputusan Pimpinan</a></li>
+        <li><a href="/cari/" class="hover:text-gray-900 hover:font-bold">Lembar Pesantren</a></li>
+      </ul>
+    </li>
+    <li class="hover:bg-white hover:text-gray-900 hover:font-bold"><a href="/cari/" class="block py-2 ml-6">Rancangan Hukum</a></li>
+    <li class="hover:bg-white hover:text-gray-900 hover:font-bold"><a href="/cari/" class="block py-2 ml-6">Hubungi Kami</a></li>
   </ul>
 </div>
 
@@ -22,5 +34,12 @@
   function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.toggle("translate-x-full");
+  }
+  function toggleSubMenu(event) {
+    event.preventDefault(); // Mencegah navigasi default
+    const submenu = event.target.nextElementSibling;
+    if (submenu) {
+      submenu.classList.toggle('hidden');
+    }
   }
 </script>

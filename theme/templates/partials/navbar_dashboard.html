@@ -1,74 +1,73 @@
 {% load static %}
+
 <nav class="md:mt-10">
-  <div
-    class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-72 h-52 md:rounded-lg"
-  >
+  <div class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-72 h-52 md:rounded-lg">
     <div class="relative flex items-center justify-between h-16">
       <div class="flex-1 flex items-center md:items-stretch md:justify-start">
         <div class="flex items-center md:ml-12 ml-5">
-          <img
-            src="{% static 'img/nj.png' %}"
-            alt="Logo"
-            class="mt-12 md:h-20 md:w-20 h-16 w-16"
-          />
-          <a
-            href="/"
-            class="text-white mt-12 px-3 py-2 rounded-md text-xl font-medium lg:text-2xl"
-            style="font-family: 'Rakkas'"
-          >
+          <img src="{% static 'img/nj.png' %}" alt="Logo" class="mt-12 md:h-20 md:w-20 h-16 w-16" />
+          <a href="{% url 'dashboard' %}" class="text-white mt-12 px-3 rounded-md text-xl font-medium lg:text-2xl" style="font-family: 'Rakkas'">
             <span>LHP</span>
             <span style="display: block; height: 0.3em"></span>
             PP. Nurul Jadid
           </a>
         </div>
         <div class="sm:hidden hidden md:block md:ml-auto mt-20 pr-10">
-          <a
-            href="/cari/"
-            class="text-white px-3 py-2 rounded-md text-lg font-medium"
-            >Beranda</a
-          >
-          <a
-            href="/cari/"
-            class="text-white px-3 py-2 rounded-md text-lg font-medium"
-            >Profil</a
-          >
-          <a
-            href="/cari/"
-            class="text-white px-3 py-2 rounded-md text-lg font-medium"
-            >Rancangan Hukum</a
-          >
-          <a
-            href="/cari/"
-            class="text-white px-3 py-2 rounded-md text-lg font-medium"
-            >Kategori</a
-          >
-          <a
-            href="/cari/"
-            class="text-white px-3 py-2 rounded-md text-lg font-medium"
-            >Hubungi Kami</a
-          >
+          <ul class="flex space-x-4">
+            <li>
+              <a href="{% url 'dashboard' %}" class="px-3 rounded-md text-lg font-medium {% if menu == 'dashboard' %} bg-white text-navBlue py-1 {% else %} text-white {% endif %} hover:bg-white hover:text-navBlue hover:py-1">Beranda</a>
+            </li>
+            <li>
+              <a href="/cari/" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Profil</a>
+            </li>
+            <li class="relative" id="dropdown-container">
+              <a href="#" onclick="toggleNavbarSubMenu(event, 'submenu-dokumen')" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Dokumen Hukum</a>
+              <ul id="submenu-dokumen" class="absolute left-0 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-96">
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Keputusan Dewan Pengasuh & Pengasuh</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Peraturan Kepala Pesantren</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Peraturan Biro, Badan & Banom</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Peraturan Satuan Pendidikan</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Standard Operating Procedure</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Kompilasi Peraturan Pesantren</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Keputusan Pimpinan</a></li>
+                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Lembar Pesantren</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="/cari/" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Rancangan Hukum</a>
+            </li>
+            <li>
+              <a href="/cari/" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Hubungi Kami</a>
+            </li>
+          </ul>
         </div>
-        <button
-          type="button"
-          class="md:hidden text-white mt-10 text-2xl flex ml-auto mr-10"
-          onclick="toggleSidebar()"
-        >
+        <button type="button" class="md:hidden text-white mt-10 text-2xl flex ml-auto mr-10" onclick="toggleSidebar()">
           <i class="fas fa-bars"></i>
         </button>
       </div>
     </div>
     <hr class="mt-12 border-t-4 border-white" />
-    <form
-      action="/cari/"
-      method="GET"
-      class="sm:mt-12 mt-5 flex justify-center"
-    >
-      <input
-        type="text"
-        name="q"
-        placeholder="Cari peraturan..."
-        class="px-3 py-2 rounded-md text-lg w-4/6 md:w-3/6"
-      />
+    <form action="/cari/" method="GET" class="sm:mt-12 mt-5 flex justify-center">
+      <input type="text" name="q" placeholder="Cari peraturan..." class="px-3 py-2 rounded-md text-lg w-4/6 md:w-3/6" />
     </form>
   </div>
 </nav>
+
+
+
+
+<script>
+  function toggleNavbarSubMenu(event, submenuId) {
+    event.preventDefault(); // Mencegah navigasi default
+    const submenu = document.getElementById(submenuId);
+    submenu.classList.toggle('hidden');
+  }
+
+  document.addEventListener('click', function(event) {
+    const dropdownContainer = document.getElementById('dropdown-container');
+    const submenu = document.getElementById('submenu-dokumen');
+    if (!dropdownContainer.contains(event.target)) {
+      submenu.classList.add('hidden');
+    }
+  });
+</script>
