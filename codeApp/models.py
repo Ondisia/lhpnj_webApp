@@ -2,7 +2,16 @@ from django.db import models
 import fitz  # PyMuPDF untuk ekstrak teks
 
 class Peraturan(models.Model):
-    judul = models.CharField(max_length=255)
+    STATUS_CHOICES = [
+        ('berlaku', 'Berlaku'),
+        ('tidak berlaku', 'Tidak Berlaku'),
+    ]
+
+    nomor_peraturan = models.CharField(max_length=50, blank=True, null=True)
+    nama_peraturan = models.CharField(max_length=255)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='berlaku')
+    tahun = models.IntegerField(blank=True, null=True)
+    kata_kunci = models.CharField(max_length=255, blank=True, null=True)
     file_pdf = models.FileField(upload_to="peraturan/")
     teks_pdf = models.TextField(blank=True, null=True)  # Simpan teks hasil ekstraksi
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,4 +34,6 @@ class Peraturan(models.Model):
         return text.strip()  # Hapus spasi kosong
 
     def __str__(self):
-        return self.judul
+        return self.nama_peraturan
+    class Meta:
+        verbose_name_plural = "Data Peraturan"

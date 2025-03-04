@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import Peraturan
 
 class PeraturanAdmin(admin.ModelAdmin):
-    list_display = ('judul', 'created_at')
-    search_fields = ('judul',)
+    list_display = ('nama_peraturan', 'created_at')
+    search_fields = ('nama_peraturan',)
 
     def has_module_permission(self, request):
         """Izinkan akses hanya untuk grup tertentu"""
