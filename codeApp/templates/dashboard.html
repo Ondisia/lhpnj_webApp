@@ -2,78 +2,26 @@
 {% load static %}
 
 {% block content %}
-<div class="grid grid-cols-1 mb-4 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
-    <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto">
-        <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-            <img src="{% static 'img/dash/people.png' %}" alt="" class="max-h-16 sm:max-h-20">
-        </div>
-        <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-            Keputusan Dewan Pengasuh & Pengasuh
-        </div>
-    </div>
-    <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto">
-        <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-            <img src="{% static 'img/dash/hammer.png' %}" alt="" class="max-h-16 sm:max-h-20">
-        </div>
-        <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-            Peraturan Kepala Pesantren
-        </div>
-    </div>
-    <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto">
-        <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-            <img src="{% static 'img/dash/paper.png' %}" alt="" class="max-h-16 sm:max-h-20">
-        </div>
-        <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-            Peraturan Biro, Badan, dan Banom
-        </div>
-    </div>
-    <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto">
-        <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-            <img src="{% static 'img/dash/shield.png' %}" alt="" class="max-h-16 sm:max-h-20">
-        </div>
-        <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-            Peraturan Satuan Pendidikan
-        </div>
-    </div>
-    <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg lg:flex items-center w-auto hidden">
-        <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-            <img src="{% static 'img/dash/paper-checklist.png' %}" alt="" class="max-h-16 sm:max-h-20">
-        </div>
-        <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-            Standard Operating Procedure (SOP)
-        </div>
-    </div>
-    <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg lg:flex items-center w-auto hidden">
-        <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-            <img src="{% static 'img/dash/clipart.png' %}" alt="" class="max-h-20 sm:max-h-20">
-        </div>
-        <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-            Kompilasi Peraturan Pesantren
-        </div>
-    </div>
-</div>
-<div class="lg:flex justify-center hidden">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
-        <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center">
+
+<div class="grid grid-cols-2 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
+    {% for kategori in kategori_list %}
+    <a href="{% url 'daftar_peraturan' kategori.kode|lower %}" class="block">
+        <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto {% if kategori.is_mobile_hidden %}lg:flex hidden{% endif %}">
             <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-                <img src="{% static 'img/dash/paper-pencil.png' %}" alt="" class="max-h-16 sm:max-h-20">
+                {% if kategori.icon %}
+                    <img src="{{ kategori.icon.url }}" alt="{{ kategori.nama }}" class="max-h-16 sm:max-h-20">
+                {% else %}
+                    <img src="{% static 'img/nj.png' %}" alt="Default Icon" class="max-h-16 sm:max-h-20">
+                {% endif %}
             </div>
-            
-            <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-                Keputusan Pimpinan
-            </div>
-        </div>
-        <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center">
-            <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
-                <img src="{% static 'img/dash/roll-paper.png' %}" alt="" class="max-h-16 sm:max-h-20">
-            </div>
-            
-            <div class="text-md sm:text-lg p-3 sm:p-5 text-center">
-                Lembar Pesantren
+            <div class="text-md sm:text-lg p-3 sm:p-5 mx-auto text-center">
+                {{ kategori.nama }}
             </div>
         </div>
-    </div>
+    </a>
+    {% endfor %}
 </div>
+
 <hr class="mt-8 mb-2 border-t-4 border-black" />
 <div class="text-center font-serif font-inria ">
     <p class="text-4xl underline decoration-2 underline-offset-4">INFORMASI UMUM</p>
@@ -110,37 +58,30 @@
                 </div>
             </td>
         </tr>
-        <tr class="text-black border-b-2 border-gray-600">
-            <td style="width: 85%;" class="px-4 md:px-0 md:pr-10">
-                <p class="font-bold text-lg sm:text-xl">Peraturan Pengasuh Tentang Pulangan </p>
-                <p class="text-md sm:text-lg text-justify md:block hidden">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. A obcaecati enim consectetur suscipit cumque, quo saepe maiores voluptates autem temporibus necessitatibus totam possimus, asperiores, ut mollitia alias labore ipsa iste!
-                </p>
-                <p class="text-md sm:text-lg text-justify md:hidden block">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    <span class="read-more text-blue-600 underline" style="cursor: pointer;">Read more</span>
-                    <span class="read-more-content hidden">
-                        A obcaecati enim consectetur suscipit cumque, quo saepe maiores voluptates autem temporibus necessitatibus totam possimus, asperiores, ut mollitia alias labore ipsa iste!
-                    </span>
-                </p>
-            </td>
-            <td style="width: 15%;" class="px-2 md:px-0">
-                <div class="flex flex-col justify-center my-2">
-                    <button class="bg-navBlue View py-2 px-4 rounded-md text-white font-bold mb-2"><i class="fas fa-eye"></i> View</button>
-                    <button class="bg-navGray Download py-2 px-4 rounded-md text-white font-bold"><i class="fas fa-download"></i> Download</button>
-                </div>
-            </td>
-        </tr>
+        <!-- Repeat similar <tr> blocks as needed -->
     </tbody>
 </table>
 
-
 <script>
-    const readMore = document.querySelector('.read-more');
-    const readMoreContent = document.querySelector('.read-more-content');
+    document.querySelectorAll('.read-more').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            content.classList.toggle('hidden');
+            if (!content.classList.contains('hidden')) {
+                button.style.display = 'none';
+            }
+        });
+    });
 
-    readMore.addEventListener('click', () => {
-        readMoreContent.classList.toggle('hidden');
+    document.addEventListener('click', (event) => {
+        if (!event.target.classList.contains('read-more') && !event.target.closest('.read-more-content')) {
+            document.querySelectorAll('.read-more-content').forEach(content => {
+                if (!content.classList.contains('hidden')) {
+                    content.classList.add('hidden');
+                    content.previousElementSibling.style.display = 'inline';
+                }
+            });
+        }
     });
 </script>
 

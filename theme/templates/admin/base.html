@@ -89,6 +89,14 @@
         border-radius: 50%;
         padding: 2px;
       }
+      /* Memastikan select field mengikuti lebar container */
+      .related-widget-wrapper select, 
+      .form-group select {
+          width: 100%;
+          max-width: 100%;
+          flex: 1 1 auto;
+          box-sizing: border-box;
+      }
     </style>
 
     {% block extrastyle %} {% endblock %} {% block extrahead %} {% endblock %}

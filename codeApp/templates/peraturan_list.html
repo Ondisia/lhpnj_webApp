@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peraturan - {{ kategori.nama }}</title>
+</head>
+<body>
+
+    <h2>Daftar Peraturan: {{ kategori.nama }}</h2>
+    <a href="{% url 'dashboard' %}">← Kembali ke kategori</a>
+    
+    <ul>
+        {% for peraturan in peraturan_list %}
+            <li>
+                <a href="{{ peraturan.file_pdf.url }}" target="_blank">{{ peraturan.nama_peraturan }}</a>
+            </li>
+        {% empty %}
+            <li>Tidak ada peraturan dalam kategori ini.</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

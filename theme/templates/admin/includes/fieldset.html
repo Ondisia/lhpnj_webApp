@@ -38,6 +38,7 @@
                     {% else %}
                         {{ field.field }}
                     {% endif %}
+                    
                     <div class="help-block red">
                         {% if not line.fields|length == 1 and not field.is_readonly %}{{ field.errors }}{% endif %}
                     </div>
