@@ -6,14 +6,14 @@
     {% for kategori in kategori_list %}
     <a href="{% url 'daftar_peraturan' kategori.kode|lower %}" class="block">
         <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto {% if kategori.is_mobile_hidden %}lg:flex hidden{% endif %}">
-            <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-28 sm:h-full flex-none flex items-center justify-center">
+            <div class="bg-shortMenuIcon rounded-bl-lg w-16 sm:w-24 h-28 sm:h-full flex-none flex items-center justify-center">
                 {% if kategori.icon %}
-                    <img src="{{ kategori.icon.url }}" alt="{{ kategori.nama }}" class="max-h-16 sm:max-h-20">
+                    <img src="{{ kategori.icon.url }}" alt="{{ kategori.nama }}" class="max-h-10 sm:max-h-16">
                 {% else %}
-                    <img src="{% static 'img/nj.png' %}" alt="Default Icon" class="max-h-16 sm:max-h-20">
+                    <img src="{% static 'img/nj.png' %}" alt="Default Icon" class="max-h-10 sm:max-h-16">
                 {% endif %}
             </div>
-            <div class="text-md sm:text-lg p-3 sm:p-5 mx-auto text-center">
+            <div class="text-xs lg:text-xl 2xl:text-2xl 3xl:text-3xl p-3 sm:p-5 mx-auto text-center">
             {{ kategori.nama }}
             </div>
         </div>
@@ -27,62 +27,45 @@
     <p class="text-xl underline decoration-2 underline-offset-4">--Terbaru--</p>
 </div>
 <div class="flex justify-center my-4 text-white font-bold">
-    <div class="bg-labelTabel h-10 w-full mr-1 flex justify-end items-center pr-4">Keputusan</div>
-    <div class="bg-labelTabel h-10 w-full mr-1 flex justify-center items-center">Peraturan Kepala</div>
-    <div class="bg-labelTabel h-10 w-full mr-1 hidden md:flex justify-center items-center">Peraturan Biro & Banom</div>
-    <div class="bg-labelTabel h-10 w-full mr-1 hidden md:flex items-center justify-center">Peraturan Satuan Pendidikan</div>
-    <div class="bg-labelTabel h-10 w-full flex items-center pl-4">Lembar Pesantren</div>
+    <div class="bg-labelTabel h-16 md:h-10 w-full mr-1 flex justify-end items-center pr-4">Keputusan</div>
+    <div class="bg-labelTabel h-16 md:h-10 w-full mr-1 flex justify-center items-center text-center">Peraturan Kepala</div>
+    <div class="bg-labelTabel h-16 md:h-10 w-full mr-1 hidden md:flex justify-center items-center">Peraturan Biro & Banom</div>
+    <div class="bg-labelTabel h-16 md:h-10 w-full mr-1 hidden md:flex items-center justify-center">Peraturan Satuan Pendidikan</div>
+    <div class="bg-labelTabel h-16 md:h-10 w-full flex items-center pl-4">Lembar Pesantren</div>
 </div>
 
-<table class="w-full mb-20">
-    <tbody>
-        {% for peraturan in peraturan_terbaru %}
-        <tr class="text-black border-b-2 border-gray-600">
-            <td style="width: 85%;" class="px-4 md:px-0 md:pr-10">
-            <p class="font-bold text-md sm:text-lg">{{ peraturan.nama_peraturan }}</p>
-            <p class="text-sm sm:text-md text-justify hidden md:block">
-                {{ peraturan.teks_pdf|truncatewords:30 }}
-            </p>
-            <p class="text-sm sm:text-md text-justify block md:hidden">
-                {{ peraturan.deskripsi|truncatewords:10 }}
-                <span class="read-more text-blue-600 underline" style="cursor: pointer;">Read more</span>
-                <span class="read-more-content hidden">
-                {{ peraturan.teks_pdf|truncatewords:30 }}
-                </span>
-            </p>
-            </td>
-            <td style="width: 15%;" class="px-2 md:px-0">
-            <div class="flex flex-col justify-center my-2">
-                <a href="{{ peraturan.file_pdf.url }}" class="bg-navBlue py-2 px-4 text-md rounded-md text-white font-bold mb-2 text-center" target="_blank"><i class="fas fa-eye"></i> View</a>
-                <a href="{{ peraturan.file_pdf.url }}" download class="bg-navGray py-2 px-4 text-md rounded-md text-white font-bold text-center"><i class="fas fa-download"></i> Download</a>
-            </div>
-            </td>
-        </tr>
-        {% endfor %}
-        <!-- Repeat similar <tr> blocks as needed -->
-    </tbody>
-</table>
-
-<script>
-    document.querySelectorAll('.read-more').forEach(button => {
-        button.addEventListener('click', () => {
-            const content = button.nextElementSibling;
-            content.classList.toggle('hidden');
-            if (!content.classList.contains('hidden')) {
-                button.style.display = 'none';
-            }
-        });
-    });
-
-    document.addEventListener('click', (event) => {
-        if (!event.target.classList.contains('read-more') && !event.target.closest('.read-more-content')) {
-            document.querySelectorAll('.read-more-content').forEach(content => {
-                if (!content.classList.contains('hidden')) {
-                    content.classList.add('hidden');
-                    content.previousElementSibling.style.display = 'inline';
-                }
-            });
-        }
-    });
-</script>
+<div class="px-4 md:px-4 lg:px-10">
+    <table class="max-w-screen-3xl mb-20 w-full">
+        <tbody>
+            {% for peraturan in peraturan_terbaru %}
+            <tr class="text-black border-b-2 border-gray-600 text-justify">
+                <td style="width: 85%;" class="px-4 md:px-0 md:pr-10">
+                <p class="font-bold text-xs sm:text-lg mb-2">{{ peraturan.nama_peraturan }}</p>
+                <p class="text-sm sm:text-base hidden md:block">
+                    {{ peraturan.teks_pdf|truncatewords:60 }}
+                </p>
+                <p class="text-sm sm:text-base block md:hidden">
+                    <span class="truncated-text">
+                        {{ peraturan.teks_pdf|truncatewords:10 }}
+                    </span>
+                    <span class="read-more text-blue-600 underline cursor-pointer">Read more</span>
+                    <span class="read-more-content hidden">
+                        {{ peraturan.teks_pdf|truncatewords:30 }}
+                    </span>
+                </p>
+                
+                
+                </td>
+                <td style="width: 15%;" class="px-2 md:px-0">
+                <div class="flex flex-col justify-center my-2">
+                    <a href="{{ peraturan.file_pdf.url }}" class="bg-navBlue py-2 px-4 text-md rounded-md text-white font-bold mb-2 text-center" target="_blank"><i class="fas fa-eye"></i> <span class="hidden lg:block">View</span></a>
+                    <a href="{{ peraturan.file_pdf.url }}" download class="bg-navGray py-2 px-4 text-md rounded-md text-white font-bold text-center"><i class="fas fa-download"></i> <span class="hidden lg:block">Download</span></a>
+                </div>
+                </td>
+            </tr>
+            {% endfor %}
+            <!-- Repeat similar <tr> blocks as needed -->
+        </tbody>
+    </table>
+</div>
 {% endblock content %}

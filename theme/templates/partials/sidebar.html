@@ -37,16 +37,3 @@
     </li>
   </ul>
 </div>
-
-<script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("translate-x-full");
-  }
-
-  function toggleSidebarSubMenu(event, submenuId) {
-    event.preventDefault(); // Mencegah navigasi default
-    const submenu = document.getElementById(submenuId);
-    submenu.classList.toggle('hidden');
-  }
-</script>

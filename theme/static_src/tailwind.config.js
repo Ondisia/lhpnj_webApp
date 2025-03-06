@@ -53,6 +53,12 @@ module.exports = {
                 coAbout : "#1C626C",
             },
             screens: {
+                'xs': '375px', // Ukuran iPhone X ke atas
+                'sm': '430px',
+                'md': '768px', // Ukuran tablet
+                'lg': '1024px', // Ukuran laptop
+                'xl': '1280px', // Ukuran monitor
+                '2xl': '1536px',
                 '3xl' : '1920px',
             }
         },

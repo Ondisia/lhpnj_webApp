@@ -208,27 +208,3 @@
     {% endif %}
   </div>
 </nav>
-
-
-
-
-<script>
-  function toggleNavbarSubMenu(event, submenuId) {
-    event.preventDefault(); // Mencegah navigasi default
-    const submenu = document.getElementById(submenuId);
-    submenu.classList.toggle('hidden');
-  }
-
-  document.addEventListener('click', function(event) {
-    const dropdownContainer = document.getElementById('dropdown-container');
-    const submenu = document.getElementById('submenu-dokumen');
-    if (!dropdownContainer.contains(event.target)) {
-      submenu.classList.add('hidden');
-    }
-  });
-  
-  document.getElementById('clear-search').addEventListener('click', function() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('search-results').classList.add('hidden');
-  });
-</script>
