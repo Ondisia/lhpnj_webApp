@@ -1,12 +1,11 @@
 {% load static %}
-
-<nav class="md:mt-10">
-  {% if menu == 'dashboard'  %}
-    <div class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-72 h-52 md:rounded-lg">
+<nav class="md:mt-10 3xl:-space-x-10 mx-auto md:px-8 lg:px-12">
+  {% if menu == 'dashboard' %}
+    <div class="w-full max-w-screen-3xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-80 h-64 md:rounded-lg">
   {% else %}
-    <div class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray h-32 md:rounded-lg">
+    <div class="w-full max-w-screen-3xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray h-40 md:rounded-lg">
   {% endif %}
-  
+
     <div class="relative flex items-center justify-between h-16">
       <div class="flex-1 flex items-center md:items-stretch md:justify-start">
         <div class="flex items-center md:ml-12 ml-5">

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-@f02^)1$z=d&nxynk61*j19ok46*do#3gg(yt6rt1yw(56$sxh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,6 +49,7 @@ NPM_BIN_PATH = "E:/laragon/bin/nodejs/node-v18/npm.cmd"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,9 +125,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'theme/static'),
+    os.path.join(BASE_DIR, 'media'), 
 ]
 
 MEDIA_URL = '/media/'
@@ -136,3 +139,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Pastikan WhiteNoise digunakan untuk menangani file statis
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

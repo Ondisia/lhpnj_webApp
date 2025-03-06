@@ -27,7 +27,7 @@
 
     {% if menu == 'dashboard' or menu == 'profil-lembaga' %}
       <div
-        class="bg-coAbout w-full h-40 text-white items-center flex flex-col justify-center sm:px-0 px-4"
+        class="bg-coAbout max-w-screen-3xl h-40 mx-auto text-white items-center flex flex-col justify-center sm:px-0 px-4"
       >
         <p
           class="font-serif font-inria text-2xl underline decoration-2 underline-offset-4"
@@ -53,9 +53,9 @@
           <!-- Isi Alamat dan Kontak tetap dalam dua kolom -->
           <div class="grid grid-cols-2 gap-4 mt-4">
             <!-- Alamat -->
-            <div class="flex items-start gap-2 px-4">
+            <div class="flex items-start gap-2 px-4 justify-center">
               <img src="{% static 'img/dash/home.png' %}" class="w-10" alt="Home Icon">
-              <span>
+              <span class="sm:block md:flex md:flex-wrap md:w-full xl:w-2/3 2xl:w-1/2">
                 Jl. KH. Zaini Mun'im, Desa Karanganyar, Kecamatan Paiton, Kabupaten Probolinggo, Kode Pos: 67291
               </span>
             </div>
