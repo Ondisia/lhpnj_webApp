@@ -1,24 +1,161 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peraturan - {{ kategori.nama }}</title>
-</head>
-<body>
+{% extends 'main.html' %}
 
-    <h2>Daftar Peraturan: {{ kategori.nama }}</h2>
-    <a href="{% url 'dashboard' %}">← Kembali ke kategori</a>
-    
-    <ul>
-        {% for peraturan in peraturan_list %}
-            <li>
-                <a href="{{ peraturan.file_pdf.url }}" target="_blank">{{ peraturan.nama_peraturan }}</a>
-            </li>
-        {% empty %}
-            <li>Tidak ada peraturan dalam kategori ini.</li>
-        {% endfor %}
-    </ul>
+{% block content %}
+<div class="container mx-auto mt-10 flex flex-col md:flex-row gap-6 px-4 sm:px-6 lg:px-0">
+    <!-- Sidebar Rekapitulasi -->
+    <div class="md:w-2/5 flex flex-col gap-4">
+        <!-- Kotak Rekapitulasi -->
+        <div class="bg-white p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold">Rekapitulasi (Jumlah Dokumen)</h2>
+            <hr class="mb-3 border-t-2 border-gray-900">
+            {% for r in rekapitulasi %}
+                <p class="text-gray-700 flex justify-between">
+                    <span>{{ r.kategori_peraturan__nama }} :</span>
+                    <span class="font-bold">{{ r.jumlah }}</span>
+                </p>
+                </p>
+            {% endfor %}
+        </div>
 
-</body>
-</html>
+        <!-- Kotak Ringkasan Kategori -->
+        <div class="bg-white p-4 rounded-lg shadow-md relative overflow-hidden">
+            <h3 class="text-lg font-semibold">Grafik Dokumen</h3>
+            <hr class="mb-3 border-t-2 border-gray-900">
+            <div class="relative w-full max-h-64">
+                <canvas id="chartRingkasan"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Daftar Peraturan -->
+    <div class="md:w-full bg-white p-4 rounded-lg shadow-md mb-20 md:mb-0">
+        <div class="flex flex-col justify-start items-start mb-4">
+            <h2 class="text-xl font-semibold">{{kategori}}</h2>
+            <input type="text" id="searchInput" placeholder="Cari peraturan..." class="mt-2 p-2 border rounded w-full md:w-1/2">
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-gray-200 text-gray-700 border-b-2 border-gray-300">
+                    <tr>
+                        <th class="p-3 border border-gray-300">No</th>
+                        <th class="p-3 border border-gray-300">Nama Peraturan</th>
+                        <th class="p-3 border border-gray-300">File</th>
+                    </tr>
+                </thead>
+                <tbody id="peraturanTable">
+                    {% if peraturan_list %}
+                        {% for peraturan in peraturan_list %}
+                        <tr class="odd:bg-white even:bg-gray-100">
+                            <td class="p-3 border text-center w-10">{{ peraturan_list.start_index|add:forloop.counter0 }}</td>
+                            <td class="p-3 border">
+                                <div class="flex flex-col text-justify">
+                                    <span class="font-semibold">{{ peraturan.nama_peraturan }}</span>
+                                    <hr class="my-2 border-t-2 border-gray-900">
+                                    <span class="text-gray-600 text-sm">{{ peraturan.teks_pdf|truncatewords:40 }}</span>
+                                </div>
+                            </td>
+                            <td class="p-3 border text-center w-32">
+                                <div class="flex flex-col">
+                                    <a href="{{ peraturan.file_pdf.url }}" class="bg-navBlue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block w-full mb-2" target="_blank">
+                                        <div class="flex items-center justify-center">
+                                            <i class="fas fa-eye mr-2"></i>
+                                            <span class="hidden lg:block">View</span>
+                                        </div>
+                                    </a>
+                                    <a href="{{ peraturan.file_pdf.url }}" download class="bg-navGray hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block w-full">
+                                        <div class="flex items-center justify-center">
+                                            <i class="fas fa-download mr-2"></i>
+                                            <span class="hidden lg:block">Download</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="p-3 border text-center text-gray-700">
+                                Tidak ada peraturan yang ditemukan.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        {% if peraturan_list.paginator.num_pages > 1 %}
+        <div class="flex justify-end mt-4">
+            <div class="flex space-x-2">
+                {% if peraturan_list.has_previous %}
+                <a href="?page=1" class="px-4 py-2 bg-gray-200 text-gray-700 rounded">First</a>
+                <a href="?page={{ peraturan_list.previous_page_number }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded">Previous</a>
+                {% endif %}
+
+                {% for num in peraturan_list.paginator.page_range %}
+                {% if peraturan_list.number == num %}
+                <span class="px-4 py-2 bg-blue-500 text-white rounded">{{ num }}</span>
+                {% elif num > peraturan_list.number|add:"-3" and num < peraturan_list.number|add:"3" %}
+                <a href="?page={{ num }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if peraturan_list.has_next %}
+                <a href="?page={{ peraturan_list.next_page_number }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded">Next</a>
+                <a href="?page={{ peraturan_list.paginator.num_pages }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded">Last</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Tambahkan Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('chartRingkasan').getContext('2d');
+    var chartRingkasan = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels|safe }},
+            datasets: [{
+                label: 'Jumlah Dokumen',
+                data: {{ chart_data|safe }},
+                backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#9C27B0', '#3F51B5', '#00BCD4'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function resizeChart() {
+        setTimeout(() => {
+            chartRingkasan.resize();
+        }, 300);
+    }
+    window.addEventListener("resize", resizeChart);
+    // Live Search Functionality
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        var searchValue = this.value.toLowerCase();
+        var rows = document.querySelectorAll('#peraturanTable tr');
+        rows.forEach(function(row) {
+            var namaPeraturan = row.cells[1].textContent.toLowerCase();
+            if (namaPeraturan.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

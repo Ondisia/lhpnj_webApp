@@ -1,13 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'main.html' %}
 {% load static %}
 
 {% block content %}
-
-<div class="grid grid-cols-2 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
+<div class="grid grid-cols-2 mt-10 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
     {% for kategori in kategori_list %}
     <a href="{% url 'daftar_peraturan' kategori.kode|lower %}" class="block">
         <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto {% if kategori.is_mobile_hidden %}lg:flex hidden{% endif %}">
-            <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-full flex-none flex items-center justify-center p-2">
+            <div class="bg-shortMenuIcon rounded-bl-lg w-20 sm:w-24 h-28 sm:h-full flex-none flex items-center justify-center">
                 {% if kategori.icon %}
                     <img src="{{ kategori.icon.url }}" alt="{{ kategori.nama }}" class="max-h-16 sm:max-h-20">
                 {% else %}
@@ -15,14 +14,14 @@
                 {% endif %}
             </div>
             <div class="text-md sm:text-lg p-3 sm:p-5 mx-auto text-center">
-                {{ kategori.nama }}
+            {{ kategori.nama }}
             </div>
         </div>
     </a>
     {% endfor %}
 </div>
 
-<hr class="mt-8 mb-2 border-t-4 border-black" />
+<hr class="mt-20 mb-2 border-t-4 border-black" />
 <div class="text-center font-serif font-inria ">
     <p class="text-4xl underline decoration-2 underline-offset-4">INFORMASI UMUM</p>
     <p class="text-xl underline decoration-2 underline-offset-4">--Terbaru--</p>
@@ -37,27 +36,29 @@
 
 <table class="w-full mb-20">
     <tbody>
+        {% for peraturan in peraturan_terbaru %}
         <tr class="text-black border-b-2 border-gray-600">
             <td style="width: 85%;" class="px-4 md:px-0 md:pr-10">
-                <p class="font-bold text-lg sm:text-xl">Peraturan Pengasuh Tentang Pulangan </p>
-                <p class="text-md sm:text-lg text-justify md:block hidden">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. A obcaecati enim consectetur suscipit cumque, quo saepe maiores voluptates autem temporibus necessitatibus totam possimus, asperiores, ut mollitia alias labore ipsa iste!
-                </p>
-                <p class="text-md sm:text-lg text-justify md:hidden block">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    <span class="read-more text-blue-600 underline" style="cursor: pointer;">Read more</span>
-                    <span class="read-more-content hidden">
-                        A obcaecati enim consectetur suscipit cumque, quo saepe maiores voluptates autem temporibus necessitatibus totam possimus, asperiores, ut mollitia alias labore ipsa iste!
-                    </span>
-                </p>
+            <p class="font-bold text-md sm:text-lg">{{ peraturan.nama_peraturan }}</p>
+            <p class="text-sm sm:text-md text-justify hidden md:block">
+                {{ peraturan.teks_pdf|truncatewords:30 }}
+            </p>
+            <p class="text-sm sm:text-md text-justify block md:hidden">
+                {{ peraturan.deskripsi|truncatewords:10 }}
+                <span class="read-more text-blue-600 underline" style="cursor: pointer;">Read more</span>
+                <span class="read-more-content hidden">
+                {{ peraturan.teks_pdf|truncatewords:30 }}
+                </span>
+            </p>
             </td>
             <td style="width: 15%;" class="px-2 md:px-0">
-                <div class="flex flex-col justify-center my-2">
-                    <button class="bg-navBlue View py-2 px-4 rounded-md text-white font-bold mb-2"><i class="fas fa-eye"></i> View</button>
-                    <button class="bg-navGray Download py-2 px-4 rounded-md text-white font-bold"><i class="fas fa-download"></i> Download</button>
-                </div>
+            <div class="flex flex-col justify-center my-2">
+                <a href="{{ peraturan.file_pdf.url }}" class="bg-navBlue py-2 px-4 text-md rounded-md text-white font-bold mb-2 text-center" target="_blank"><i class="fas fa-eye"></i> View</a>
+                <a href="{{ peraturan.file_pdf.url }}" download class="bg-navGray py-2 px-4 text-md rounded-md text-white font-bold text-center"><i class="fas fa-download"></i> Download</a>
+            </div>
             </td>
         </tr>
+        {% endfor %}
         <!-- Repeat similar <tr> blocks as needed -->
     </tbody>
 </table>
@@ -84,6 +85,4 @@
         }
     });
 </script>
-
-
 {% endblock content %}

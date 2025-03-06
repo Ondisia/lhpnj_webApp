@@ -1,7 +1,12 @@
 {% load static %}
 
 <nav class="md:mt-10">
-  <div class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-72 h-52 md:rounded-lg">
+  {% if menu == 'dashboard'  %}
+    <div class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-72 h-52 md:rounded-lg">
+  {% else %}
+    <div class="max-w-7xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray h-32 md:rounded-lg">
+  {% endif %}
+  
     <div class="relative flex items-center justify-between h-16">
       <div class="flex-1 flex items-center md:items-stretch md:justify-start">
         <div class="flex items-center md:ml-12 ml-5">
@@ -15,29 +20,171 @@
         <div class="sm:hidden hidden md:block md:ml-auto mt-20 pr-10">
           <ul class="flex space-x-4">
             <li>
-              <a href="{% url 'dashboard' %}" class="px-3 rounded-md text-lg font-medium {% if menu == 'dashboard' %} bg-white text-navBlue py-1 {% else %} text-white {% endif %} hover:bg-white hover:text-navBlue hover:py-1">Beranda</a>
+              <a
+                href="{% url 'dashboard' %}"
+                class="px-3 rounded-md text-lg font-medium
+                  {% if menu == 'dashboard' %} 
+                    bg-white text-navBlue py-1
+                  {% else %} 
+                    text-white
+                  {% endif %}
+                hover:bg-white hover:text-navBlue hover:py-1"
+                >
+                Beranda
+              </a>
             </li>
             <li>
-              <a href="/cari/" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Profil</a>
+              <a
+                href="{% url 'profil_lembaga' %}"
+                class="px-3 rounded-md text-lg font-medium
+                  {% if menu == 'profil-lembaga' %} 
+                    bg-white text-navBlue py-1
+                  {% else %} 
+                    text-white
+                  {% endif %}
+                hover:bg-white hover:text-navBlue hover:py-1"
+                >
+                Profil
+              </a>
             </li>
             <li class="relative" id="dropdown-container">
-              <a href="#" onclick="toggleNavbarSubMenu(event, 'submenu-dokumen')" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Dokumen Hukum</a>
-              <ul id="submenu-dokumen" class="absolute left-0 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-96">
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Keputusan Dewan Pengasuh & Pengasuh</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Peraturan Kepala Pesantren</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Peraturan Biro, Badan & Banom</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Peraturan Satuan Pendidikan</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Standard Operating Procedure</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Kompilasi Peraturan Pesantren</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Keputusan Pimpinan</a></li>
-                <li><a href="/cari/" class="block px-4 py-2 hover:bg-gray-200 text-gray-900">Lembar Pesantren</a></li>
+              <a
+                href="#"
+                onclick="toggleNavbarSubMenu(event, 'submenu-dokumen')"
+                class="px-3 rounded-md text-lg font-medium
+                  {% if menu == 'kategori-peraturan' and request.path != '/kategori-peraturan/rh/' %} 
+                  bg-white text-navBlue py-1
+                  {% else %} 
+                  text-white
+                  {% endif %}
+                hover:bg-white hover:text-navBlue hover:py-1"
+                >Dokumen Hukum
+              </a>
+              <ul id="submenu-dokumen" class="absolute left-0 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-96 z-50">
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'kdp' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/kdp/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Keputusan Dewan Pengasuh & Pengasuh
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'pkp' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/pkp/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Peraturan Kepala Pesantren
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'pbb' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/pbb/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Peraturan Biro, Badan & Banom
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'psp' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/psp/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Peraturan Satuan Pendidikan
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'sop' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/sop/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Standard Operating Procedure
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'kpp' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/kpp/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Kompilasi Peraturan Pesantren
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'kp' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/kp/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Keputusan Pimpinan
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="{% url 'daftar_peraturan' 'lp' %}" 
+                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                      {% if request.path == '/kategori-peraturan/lp/' %}
+                      bg-gray-500 text-white py-1
+                      {% else %} 
+                        text-gray-900
+                      {% endif %}"
+                    >
+                    Lembar Pesantren
+                  </a>
+                </li>
               </ul>
             </li>
             <li>
-              <a href="/cari/" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Rancangan Hukum</a>
+              <a
+                href="{% url 'daftar_peraturan' 'rh' %}"
+                class="px-3 rounded-md text-lg font-medium
+                  {% if request.path == '/kategori-peraturan/rh/' %}
+                    bg-white text-navBlue py-1
+                  {% else %} 
+                    text-white
+                  {% endif %}
+                hover:bg-white hover:text-navBlue hover:py-1"
+                >
+                Rancangan Hukum
+              </a>
             </li>
             <li>
-              <a href="/cari/" class="text-white px-3 rounded-md text-lg font-medium hover:bg-white hover:text-navBlue hover:py-1">Hubungi Kami</a>
+              <a href="{% url 'admin:login' %}" class="px-3 rounded-md text-lg font-medium text-white hover:bg-white hover:text-navBlue hover:py-1">
+                Login
+              </a>
             </li>
           </ul>
         </div>
@@ -47,9 +194,19 @@
       </div>
     </div>
     <hr class="mt-12 border-t-4 border-white" />
-    <form action="/cari/" method="GET" class="sm:mt-12 mt-5 flex justify-center">
-      <input type="text" name="q" placeholder="Cari peraturan..." class="px-3 py-2 rounded-md text-lg w-4/6 md:w-3/6" />
+
+    
+    {% if menu == 'dashboard' %}
+    <form action="#" method="GET" id="navbar-search-form" class="sm:mt-12 mt-5 flex justify-center relative" onsubmit="return false;">
+      <div class="relative w-4/6 md:w-3/6">
+          <input type="text" id="search-input" name="q" placeholder="Cari peraturan..." class="px-3 py-2 pr-10 rounded-md text-lg w-full border border-gray-300 focus:ring focus:ring-blue-300" autocomplete="off" />
+          <button type="button" id="clear-search" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+              <i class="fas fa-times"></i>
+          </button>
+          <div id="search-results" class="absolute bg-white w-full mt-1 shadow-lg rounded-md hidden z-50"></div>
+      </div>
     </form>
+    {% endif %}
   </div>
 </nav>
 
@@ -69,5 +226,10 @@
     if (!dropdownContainer.contains(event.target)) {
       submenu.classList.add('hidden');
     }
+  });
+  
+  document.getElementById('clear-search').addEventListener('click', function() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-results').classList.add('hidden');
   });
 </script>
