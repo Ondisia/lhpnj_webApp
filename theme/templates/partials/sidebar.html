@@ -16,8 +16,8 @@
     <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'profil-lembaga' %}bg-white text-gray-900 font-bold {% endif %}">
       <a href="{% url 'profil_lembaga' %}" class="block py-2 ml-6">Profil</a>
     </li>
-    <li class="hover:bg-white hover:text-gray-900 hover:font-bold">
-      <a href="#" onclick="toggleSidebarSubMenu(event, 'sidebar-submenu-dokumen')" class="block py-2 ml-6 hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'kategori-peraturan' and request.path != '/kategori-peraturan/rh/' %}bg-white text-gray-900 font-bold{% endif %}">Dokumen Hukum</a>
+    <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'kategori-peraturan' and request.path != '/kategori-peraturan/rh/' %}bg-white text-gray-900 font-bold {% endif %}">
+      <a href="#" onclick="toggleSidebarSubMenu(event, 'sidebar-submenu-dokumen')" class="block py-2 ml-6">Dokumen Hukum</a>
       <ul id="sidebar-submenu-dokumen" class="pl-6 space-y-2 hidden pb-3 max-h-64 overflow-y-auto">
         <li><a href="{% url 'daftar_peraturan' 'kdp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Keputusan Dewan Pengasuh & Pengasuh</a></li>
         <li><a href="{% url 'daftar_peraturan' 'pkp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Peraturan Kepala Pesantren</a></li>

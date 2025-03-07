@@ -1,0 +1,17 @@
+
+.numbered-list {
+    list-style: none;
+    counter-reset: list-counter;
+    padding-left: 0;
+}
+.numbered-list li {
+    counter-increment: list-counter;
+    display: flex;
+    align-items: flex-start;
+}
+.numbered-list li::before {
+    content: counter(list-counter) ".";
+    font-weight: bold;
+    width: 2em; /* Sesuaikan lebar agar angka dan teks rata */
+    flex-shrink: 0;
+}

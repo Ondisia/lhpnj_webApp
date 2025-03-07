@@ -57,7 +57,8 @@ module.exports = {
                 'sm': '430px',
                 'md': '768px', // Ukuran tablet
                 'lg': '1024px', // Ukuran laptop
-                'xl': '1280px', // Ukuran monitor
+                'xl': '1280px',
+                'xxl': '1366px', // Ukuran monitor
                 '2xl': '1536px',
                 '3xl' : '1920px',
             }
