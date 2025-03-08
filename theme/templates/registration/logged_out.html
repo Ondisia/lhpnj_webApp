@@ -10,4 +10,7 @@
     <a class="btn {{ jazzmin_ui.button_classes.primary }} btn-block" href="{% url 'admin:index' %}">
         {% trans 'Log in again' %}
     </a>
+    <a href="{% url 'dashboard' %}" class="btn {{ jazzmin_ui.button_classes.danger }} btn-block mt-2">
+        {% trans "Kembali ke Beranda" %}
+    </a>
 {% endblock %}

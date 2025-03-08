@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container mx-auto mt-10 flex flex-col md:flex-row gap-6 px-4 sm:px-6 xl:px-24">
@@ -24,6 +25,10 @@
                 <canvas id="chartRingkasan"></canvas>
             </div>
         </div>
+
+        <!-- Elemen tersembunyi untuk menyimpan data grafik -->
+        <script id="chartLabels" type="application/json">{{ chart_labels|safe }}</script>
+        <script id="chartData" type="application/json">{{ chart_data|safe }}</script>
     </div>
 
     <!-- Daftar Peraturan -->
@@ -118,67 +123,7 @@
 {% endblock %}
 
 {% block scripts %}
-
-<!-- Tambahkan Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('chartRingkasan').getContext('2d');
-    var chartRingkasan = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ chart_labels|safe }},
-            datasets: [{
-                label: 'Jumlah Dokumen',
-                data: {{ chart_data|safe }},
-                backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#9C27B0', '#3F51B5', '#00BCD4'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    function resizeChart() {
-        setTimeout(() => {
-            chartRingkasan.resize();
-        }, 300);
-    }
-    window.addEventListener("resize", resizeChart);
-    // Live Search Functionality
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        var searchValue = this.value.toLowerCase();
-        var rows = document.querySelectorAll('#peraturanTable tr');
-        rows.forEach(function(row) {
-            var namaPeraturan = row.cells[1].textContent.toLowerCase();
-            if (namaPeraturan.includes(searchValue)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-
-    function toggleReadMore(id, fullText) {
-        var textElement = document.getElementById("teksPdf" + id);
-        var words = fullText.split(" ");
-        var maxWords = 100; // Batasi jumlah kata setelah Read More
-    
-        if (textElement.dataset.expanded === "true") {
-            textElement.innerHTML = textElement.dataset.shortText;
-            textElement.dataset.expanded = "false";
-        } else {
-            textElement.dataset.shortText = textElement.innerHTML;
-            textElement.innerHTML = words.slice(0, maxWords).join(" ") + (words.length > maxWords ? "..." : "");
-            textElement.dataset.expanded = "true";
-        }
-    }
-    
-</script>
+    <!-- Tambahkan Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/charts.js' %}"></script>
 {% endblock scripts %}

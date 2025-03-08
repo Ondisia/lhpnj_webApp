@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Peraturan, KategoriPeraturan
 from .forms import PencarianForm
 from django.db.models import Q, Count
+import json
 
 
 def dashboard(request):
@@ -45,12 +46,13 @@ def daftar_peraturan(request, kode_peraturan):
     peraturan_list = paginator.get_page(page_number)
 
     # Rekapitulasi jumlah dokumen per kategori
-    rekapitulasi = Peraturan.objects.values('kategori_peraturan__nama').annotate(jumlah=Count('id'))
+    rekapitulasi = Peraturan.objects.values('kategori_peraturan__nama').annotate(jumlah=Count('id')).order_by('kategori_peraturan__nama')
+
 
     # Data untuk chart
-    labels = [r['kategori_peraturan__nama'] for r in rekapitulasi]
-    data = [r['jumlah'] for r in rekapitulasi]
-
+    labels = json.dumps([r['kategori_peraturan__nama'] for r in rekapitulasi])
+    data = json.dumps([r['jumlah'] for r in rekapitulasi])
+    
     jeda = {
         'title': kategori.nama,
         'menu': 'kategori-peraturan',
@@ -62,10 +64,6 @@ def daftar_peraturan(request, kode_peraturan):
     }
     return render(request, 'peraturan_list.html', jeda)
 
-
-from django.http import JsonResponse
-from django.shortcuts import render
-from .models import Peraturan
 
 def cari_peraturan(request):
     query = request.GET.get("q", "").strip()

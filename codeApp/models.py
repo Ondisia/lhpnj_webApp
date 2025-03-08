@@ -8,7 +8,7 @@ class KategoriPeraturan(models.Model):
     is_mobile_hidden = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.kode} - {self.nama}"
+        return f"{self.nama} ({self.kode})"
     
     class Meta:
         verbose_name_plural = "Kategori Peraturan"
