@@ -73,8 +73,7 @@ def cari_peraturan(request):
         # Versi SQLite (saat ini digunakan)
         hasil = Peraturan.objects.filter(
             Q(nama_peraturan__icontains=query) |
-            Q(teks_pdf__icontains=query) |
-            Q(kata_kunci__icontains=query)
+            Q(teks_pdf__icontains=query)
         )[:5]  # Batasi jumlah hasil untuk performa
 
         # Versi MySQL (aktifkan saat di production)

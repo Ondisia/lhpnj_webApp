@@ -25,7 +25,7 @@ class Peraturan(models.Model):
     lembar_pesantren = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='berlaku')
     tahun = models.IntegerField(blank=True, null=True)
-    kata_kunci = models.CharField(max_length=255, blank=True, null=True)
+    file_abstract = models.FileField(upload_to="abstracts/", blank=True, null=True)  # File abstrak
     file_pdf = models.FileField(upload_to="peraturan/")
     teks_pdf = models.TextField(blank=True, null=True)  # Simpan teks hasil ekstraksi
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,11 +44,11 @@ from django.dispatch import receiver
 @receiver(post_save, sender=Peraturan)
 def extract_text_from_pdf(sender, instance, **kwargs):
     """Ekstrak teks PDF setelah peraturan disimpan"""
-    if instance.file_pdf and not instance.teks_pdf:
+    if instance.file_abstract and not instance.teks_pdf:
         text = ""
         try:
-            if hasattr(instance.file_pdf, 'path'):
-                with fitz.open(instance.file_pdf.path) as doc:
+            if hasattr(instance.file_abstract, 'path'):
+                with fitz.open(instance.file_abstract.path) as doc:
                     text = "\n".join([page.get_text("text") for page in doc])
             instance.teks_pdf = text.strip()
             instance.save(update_fields=['teks_pdf'])  # Simpan teks_pdf saja

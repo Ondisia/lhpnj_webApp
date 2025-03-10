@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     let searchInput = document.querySelector("#navbar-search-form #search-input");
     let resultsContainer = document.querySelector("#navbar-search-form #search-results");
@@ -27,28 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="font-semibold">${item.nama_peraturan}</p>
                             <p class="text-sm text-gray-500">${item.teks_pdf}...</p>
                             <div class="flex gap-2 mt-1">
-                                <a href="${item.view_url}" target="_blank" class="text-blue-500 view-link">
+                                <a href="${item.view_url}" target="_blank" class="text-blue-500">
                                     <i class="fas fa-eye"></i> View
                                 </a>
-                                <a href="${item.download_url}" class="text-green-500 download-link" download>
+                                <a href="${item.download_url}" class="text-green-500" download>
                                     <i class="fas fa-download"></i> Download
                                 </a>
                             </div>
                         `;
-
-                        // Mencegah redirect saat mengklik View atau Download
-                        div.querySelector(".view-link").addEventListener("click", function(event) {
-                            event.stopPropagation(); // Hentikan event bubbling
-                        });
-
-                        div.querySelector(".download-link").addEventListener("click", function(event) {
-                            event.stopPropagation(); // Hentikan event bubbling
-                        });
-
-                        // Klik div untuk redirect ke halaman detail
-                        div.addEventListener("click", function() {
-                            window.location.href = item.view_url;
-                        });
 
                         resultsContainer.appendChild(div);
                     });
@@ -71,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-  
 document.getElementById('clear-search').addEventListener('click', function() {
     document.getElementById('search-input').value = '';
     document.getElementById('search-results').classList.add('hidden');

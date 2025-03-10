@@ -1,0 +1,26 @@
+.drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.drop-area p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.browse-btn {
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.dragover {
+    background: #e3f2fd;
+    border-color: #007bff;
+}
