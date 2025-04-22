@@ -7,7 +7,6 @@ from .forms import PencarianForm
 from django.db.models import Q, Count
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 import json
 
 def login_user(request):
@@ -128,19 +127,16 @@ def cari_peraturan(request):
     hasil = []
 
     if query:
-        # Versi MySQL (aktifkan saat di production)
-        hasil = Peraturan.objects.annotate(
-            relevansi=SearchRank(
-                SearchVector('nama_peraturan', 'teks_pdf', 'teks_abstract'),
-                SearchQuery(query)
-            )
-        ).filter(relevansi__gt=0).order_by('-relevansi')[:5]
+        hasil = Peraturan.objects.filter(
+            Q(nama_peraturan__icontains=query) |
+            Q(teks_pdf__icontains=query)
+        )[:5]  # Batasi hasil agar tidak berat
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         data = [
             {
                 "nama_peraturan": peraturan.nama_peraturan,
-                "teks_pdf": peraturan.teks_pdf[:100],  # Potong teks agar tidak terlalu panjang
+                "teks_pdf": peraturan.teks_pdf[:100],  # Potong untuk tampilan singkat
                 "view_url": peraturan.file_pdf.url,
                 "download_url": peraturan.file_pdf.url,
             }
