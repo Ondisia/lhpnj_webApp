@@ -37,7 +37,13 @@ def after_login(request):
 def dashboard(request):
     kategori_list = KategoriPeraturan.objects.all()
 
-    peraturan_terbaru = Peraturan.objects.order_by('-created_at')[:5]
+    
+    # Filter berdasarkan hak akses user
+    if request.user.is_authenticated and request.user.groups.filter(name='pegawai').exists():
+        peraturan_terbaru = Peraturan.objects.order_by('-created_at')[:5]
+    else:
+        peraturan_terbaru = Peraturan.objects.filter(hanya_untuk_pegawai=False).order_by('-created_at')[:5]
+
 
     jeda = {
         'title': "LHP Pondok Pesantren Nurul Jadid",
@@ -58,7 +64,7 @@ def profil_lembaga(request):
 def daftar_peraturan(request, kode_peraturan):
     kategori = get_object_or_404(KategoriPeraturan, kode=kode_peraturan.upper())
 
-     # Filter berdasarkan hak akses user
+    # Filter berdasarkan hak akses user
     if request.user.is_authenticated and request.user.groups.filter(name='pegawai').exists():
         peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori).order_by('-id')
     else:
