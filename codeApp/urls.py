@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 from .views import *
 
@@ -9,7 +10,12 @@ urlpatterns = [
 
     path('kategori-peraturan/<str:kode_peraturan>/', daftar_peraturan, name='daftar_peraturan'),
 
-    # path('hubungi-lembaga-hukum-pondok-pesantren-nurul-jadid/', hubungi_lembaga, name='hubungi_lembaga'),
-
     path("cari/", cari_peraturan, name="cari_peraturan"),
+
+    path("kompilasi-peraturan-pesantren/", kompilasi_peraturan, name="kompilasi_peraturan"),
+
+    # Login & Logout
+    path("login/", login_user, name="login"),
+    path("logout/", LogoutView.as_view(next_page='dashboard'), name="logout"),
+    path('after-login/', after_login, name='after_login'),
 ]

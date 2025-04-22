@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Peraturan, KategoriPeraturan
+from .models import Peraturan, KategoriPeraturan, Kompilasi
 
 class AdminBerkasPermissionMixin:
     """Mixin untuk membatasi akses hanya untuk superuser atau grup admin-berkas"""
@@ -29,5 +29,11 @@ class KategoriPeraturanAdmin(AdminBerkasPermissionMixin, admin.ModelAdmin):
     list_display = ('kode', 'nama')
     search_fields = ('nama',)
 
+class KompilasiAdmin(AdminBerkasPermissionMixin, admin.ModelAdmin):
+    list_display = ('nama', 'deskripsi')  # Sesuaikan dengan field di model Kompilasi
+    search_fields = ('nama',)
+    list_filter = ('nama',)  # Sesuaikan dengan kebutuhan
+
 admin.site.register(KategoriPeraturan, KategoriPeraturanAdmin)
 admin.site.register(Peraturan, PeraturanAdmin)
+admin.site.register(Kompilasi, KompilasiAdmin)

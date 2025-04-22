@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'admindj_multiuser.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lhpnj_db',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -119,6 +123,8 @@ TIME_ZONE = 'Asia/Jakarta'
 USE_I18N = True
 
 USE_TZ = True
+
+LOGIN_REDIRECT_URL = '/after-login/'
 
 
 # Static files (CSS, JavaScript, Images)
