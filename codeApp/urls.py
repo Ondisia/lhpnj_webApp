@@ -12,10 +12,12 @@ urlpatterns = [
 
     path("cari/", cari_peraturan, name="cari_peraturan"),
 
-    path("kompilasi-peraturan-pesantren/", kompilasi_peraturan, name="kompilasi_peraturan"),
+    path('kompilasi-peraturan-pesantren/', kompilasi_peraturan, name='kompilasi_peraturan'),
+
+    path('daftar-peraturan-<str:kompilasi>/', daftar_peraturan_kompilasi, name='daftar_peraturan_kompilasi'),
 
     # Login & Logout
-    path("login/", login_user, name="login"),
-    path("logout/", LogoutView.as_view(next_page='dashboard'), name="logout"),
+    path('login/', login_user, name='login'),
+    path('logout/', LogoutView.as_view(next_page='dashboard'), name='logout'),
     path('after-login/', after_login, name='after_login'),
 ]

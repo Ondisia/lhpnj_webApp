@@ -1,5 +1,6 @@
 from django.db import models
 import fitz  # PyMuPDF
+from django.utils.text import slugify
 
 class KategoriPeraturan(models.Model):
     kode = models.CharField(max_length=10, unique=True)
@@ -15,7 +16,13 @@ class KategoriPeraturan(models.Model):
 
 class Kompilasi(models.Model):
     nama = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     deskripsi = models.TextField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.nama)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.nama

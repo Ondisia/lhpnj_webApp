@@ -2,6 +2,73 @@
 
 {% block content %}
 <div class="container mx-auto mt-10 flex flex-col md:flex-row gap-6 px-4 sm:px-6 xl:px-24">
+    <!-- Daftar Peraturan -->
+    <div class="bg-white p-4 rounded-lg shadow-md mb-20 md:mb-0 w-full">
+        <div class="flex flex-col justify-start items-start mb-4">
+            <h2 class="text-xl font-semibold">Daftar Kompilasi Peraturan Pesantren</h2>
+            <input type="text" id="searchInput" placeholder="Cari peraturan..." class="mt-2 p-2 border rounded w-full md:w-1/2">
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-gray-200 text-gray-700 border-b-2 border-gray-300">
+                    <tr>
+                        <th class="p-3 border border-gray-300 text-xs md:text-base">No</th>
+                        <th class="p-3 border border-gray-300 text-xs md:text-base">Nama Kompilasi</th>
+                        <th class="p-3 border border-gray-300 text-xs md:text-base">Deskripsi</th>
+                        <th class="p-3 border border-gray-300 text-xs md:text-base">Cek Peraturan</th>
+                    </tr>
+                </thead>
+                <tbody id="peraturanTable">
+                    {% if kompilasi_list %}
+                        {% for peraturan in kompilasi_list %}
+                        <tr class="odd:bg-white even:bg-gray-100">
+                            <td class="p-3 border text-center w-10 text-xs md:text-base">{{ kompilasi_list.start_index|add:forloop.counter0 }}</td>
+                            <td class="p-3 border">{{ peraturan.nama }}</td>
+                            <td class="p-3 border text-center">{{ peraturan.deskripsi }}</td>
+                            <td class="p-3 border text-center">
+                                <a href="{% url 'daftar_peraturan_kompilasi' peraturan.slug %}" class="bg-navBlue hover:bg-blue-700 text-white font-bold py-1 px-2 md:py-2 md:px-4 rounded">
+                                    <i class="fas fa-eye"></i> Lihat Dokumen
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="p-3 border text-center text-gray-700 text-xs md:text-base">
+                                Tidak ada kompilasi_list yang ditemukan.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        {% if kompilasi_list.paginator.num_pages > 1 %}
+        <div class="flex justify-center md:justify-end mt-4">
+            <div class="flex space-x-1 md:space-x-2 text-xs md:text-base">
+                {% if kompilasi_list.has_previous %}
+                <a href="?page=1" class="px-2 py-1 md:px-4 md:py-2 bg-gray-200 text-gray-700 rounded">First</a>
+                <a href="?page={{ kompilasi_list.previous_page_number }}" class="px-2 py-1 md:px-4 md:py-2 bg-gray-200 text-gray-700 rounded">Previous</a>
+                {% endif %}
+
+                {% for num in kompilasi_list.paginator.page_range %}
+                {% if kompilasi_list.number == num %}
+                <span class="px-2 py-1 md:px-4 md:py-2 bg-blue-500 text-white rounded">{{ num }}</span>
+                {% elif num > kompilasi_list.number|add:"-3" and num < kompilasi_list.number|add:"3" %}
+                <a href="?page={{ num }}" class="px-2 py-1 md:px-4 md:py-2 bg-gray-200 text-gray-700 rounded">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if kompilasi_list.has_next %}
+                <a href="?page={{ kompilasi_list.next_page_number }}" class="px-2 py-1 md:px-4 md:py-2 bg-gray-200 text-gray-700 rounded">Next</a>
+                <a href="?page={{ kompilasi_list.paginator.num_pages }}" class="px-2 py-1 md:px-4 md:py-2 bg-gray-200 text-gray-700 rounded">Last</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
 </div>
 
 {% endblock %}

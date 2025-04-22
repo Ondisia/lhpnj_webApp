@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Peraturan, KategoriPeraturan
+from .models import Peraturan, KategoriPeraturan, Kompilasi
 from .forms import PencarianForm
 from django.db.models import Q, Count
 from django.contrib.auth.decorators import login_required
@@ -83,11 +83,38 @@ def daftar_peraturan(request, kode_peraturan):
 
 
 def kompilasi_peraturan(request):
+    kompilasi_list = Kompilasi.objects.all()
+
+    # Pagination
+    paginator = Paginator(kompilasi_list, 5)  # Tampilkan 5 per halaman
+    page_number = request.GET.get('page')
+    kompilasi = paginator.get_page(page_number)
+    
     jeda = {
         'title': "Kompilasi Peraturan Pondok Pesantren Nurul Jadid",
         'menu': 'kompilasi-peraturan',
+        'kompilasi_list': kompilasi,
     }
     return render(request, "kompilasi_peraturan.html", jeda)
+
+def daftar_peraturan_kompilasi(request, kompilasi):
+    kompilasi = get_object_or_404(Kompilasi, slug=kompilasi)
+
+    peraturan_list = Peraturan.objects.filter(kompilasi=kompilasi)
+
+    # Pagination
+    paginator = Paginator(peraturan_list, 5)  # Tampilkan 5 per halaman
+    page_number = request.GET.get('page')
+    peraturan_list = paginator.get_page(page_number)
+
+    jeda = {
+        'title': kompilasi.nama,
+        'menu': 'kompilasi-peraturan',
+        'kompilasi': kompilasi.nama,
+        'peraturan_list': peraturan_list,
+    }
+    return render(request, 'peraturan_list_kompilasi.html', jeda)
+
 
 def cari_peraturan(request):
     query = request.GET.get("q", "").strip()

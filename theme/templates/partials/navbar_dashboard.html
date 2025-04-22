@@ -171,12 +171,12 @@
               {% if user.is_authenticated %}
                 <form action="{% url 'logout' %}" method="post">
                   {% csrf_token %}
-                  <button type="submit" class="px-3 rounded-md text-lg font-medium text-white hover:bg-white hover:text-navBlue hover:py-1">
+                  <button type="submit" class="px-3 rounded-md text-lg font-medium text-white">
                     Logout
                   </button>
                 </form>
               {% else %}
-                <a href="{% url 'login' %}" class="px-3 rounded-md text-lg font-medium text-white hover:bg-white hover:text-navBlue hover:py-1">
+                <a href="{% url 'login' %}" class="px-3 rounded-md text-lg font-medium text-white">
                   Login
                 </a>
               {% endif %}
