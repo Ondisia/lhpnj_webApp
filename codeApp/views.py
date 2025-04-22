@@ -7,6 +7,7 @@ from .forms import PencarianForm
 from django.db.models import Q, Count
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 import json
 
 def login_user(request):
@@ -59,9 +60,9 @@ def daftar_peraturan(request, kode_peraturan):
 
      # Filter berdasarkan hak akses user
     if request.user.is_authenticated and request.user.groups.filter(name='pegawai').exists():
-        peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori)
+        peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori).order_by('-id')
     else:
-        peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori, hanya_untuk_pegawai=False)
+        peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori, hanya_untuk_pegawai=False).order_by('-id')
 
 
     # Pagination
@@ -121,15 +122,12 @@ def cari_peraturan(request):
     hasil = []
 
     if query:
-        # # Versi SQLite (saat ini digunakan)
-        # hasil = Peraturan.objects.filter(
-        #     Q(nama_peraturan__icontains=query) |
-        #     Q(teks_pdf__icontains=query)
-        # )[:5]  # Batasi jumlah hasil untuk performa
-
         # Versi MySQL (aktifkan saat di production)
         hasil = Peraturan.objects.annotate(
-            relevansi=SearchRank(SearchVector('nama_peraturan', 'teks_pdf', 'kata_kunci'), SearchQuery(query))
+            relevansi=SearchRank(
+                SearchVector('nama_peraturan', 'teks_pdf', 'teks_abstract'),
+                SearchQuery(query)
+            )
         ).filter(relevansi__gt=0).order_by('-relevansi')[:5]
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
