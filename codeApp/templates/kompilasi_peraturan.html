@@ -27,8 +27,9 @@
                             <td class="p-3 border">{{ peraturan.nama }}</td>
                             <td class="p-3 border text-center">{{ peraturan.deskripsi }}</td>
                             <td class="p-3 border text-center">
-                                <a href="{% url 'daftar_peraturan_kompilasi' peraturan.slug %}" class="bg-navBlue hover:bg-blue-700 text-white font-bold py-1 px-2 md:py-2 md:px-4 rounded">
-                                    <i class="fas fa-eye"></i> Lihat Dokumen
+                                <a href="{% url 'daftar_peraturan_kompilasi' peraturan.slug %}" class="bg-navBlue hover:bg-blue-700 text-white font-bold py-1 px-2 md:py-2 md:px-4 rounded flex items-center justify-center">
+                                    <i class="fas fa-eye"></i>
+                                    <span class="hidden md:block ml-2">Lihat Dokumen</span>
                                 </a>
                             </td>
                         </tr>

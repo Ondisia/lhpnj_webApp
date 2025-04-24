@@ -124,7 +124,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = '/after-login/'
 
 
 # Static files (CSS, JavaScript, Images)

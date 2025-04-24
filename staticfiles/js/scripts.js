@@ -25,28 +25,47 @@ document.addEventListener('click', (event) => {
 
 
 function toggleNavbarSubMenu(event, submenuId) {
-    event.preventDefault(); // Mencegah navigasi default
-    const submenu = document.getElementById(submenuId);
-    submenu.classList.toggle('hidden');
-  }
+  event.preventDefault();
+  const submenu = document.getElementById(submenuId);
+  submenu.classList.toggle('hidden');
+}
 
-  document.addEventListener('click', function(event) {
-    const dropdownContainer = document.getElementById('dropdown-container');
-    const submenu = document.getElementById('submenu-dokumen');
-    if (!dropdownContainer.contains(event.target)) {
-      submenu.classList.add('hidden');
+document.addEventListener('click', function(event) {
+  const dropdownContainers = ['dropdown-container', 'profil-dropdown-container'];
+  const submenus = ['submenu-dokumen', 'submenu-profil'];
+  
+  submenus.forEach((submenuId, index) => {
+      const container = document.getElementById(dropdownContainers[index]);
+      const submenu = document.getElementById(submenuId);
+      if (!container.contains(event.target)) {
+          submenu.classList.add('hidden');
+      }
+  });
+});
+
+function toggleSidebarSubMenu(event, submenuId) {
+  event.preventDefault(); // Mencegah navigasi link
+
+  // Tutup submenu lain (optional)
+  document.querySelectorAll('#sidebar ul ul').forEach(ul => {
+    if (ul.id !== submenuId) {
+      ul.classList.add('hidden');
     }
   });
 
+  // Toggle submenu terkait
+  const submenu = document.getElementById(submenuId);
+  submenu.classList.toggle('hidden');
+}
 
-  
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("translate-x-full");
-  }
+document.addEventListener('click', function(event) {
+  const sidebar = document.getElementById('sidebar');
 
-  function toggleSidebarSubMenu(event, submenuId) {
-    event.preventDefault(); // Mencegah navigasi default
-    const submenu = document.getElementById(submenuId);
-    submenu.classList.toggle('hidden');
+  // Cek apakah klik di luar sidebar
+  if (!sidebar.contains(event.target)) {
+    // Tutup semua submenu
+    document.querySelectorAll('#sidebar ul ul').forEach(submenu => {
+      submenu.classList.add('hidden');
+    });
   }
+});

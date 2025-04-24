@@ -107,3 +107,32 @@
 </div>
 
 {% endblock %}
+
+{% block scripts %}
+<script>
+    function toggleReadMore(counter, fullText) {
+        try {
+            const span = document.getElementById(`teksPdf${counter}`);
+            const button = span.nextElementSibling;
+
+            if (!span || !button) return;
+
+            if (button.dataset.expanded === "true") {
+                // Collapse to truncated text
+                const truncatedText = fullText.split(/\s+/).slice(0, 20).join(" ");
+                span.innerText = truncatedText + (fullText.split(/\s+/).length > 20 ? "..." : "");
+                button.innerText = "Read more";
+                button.dataset.expanded = "false";
+            } else {
+                // Expand to full text but limit to 150 words
+                const limitedText = fullText.split(/\s+/).slice(0, 150).join(" ");
+                span.innerText = limitedText + (fullText.split(/\s+/).length > 150 ? "..." : "");
+                button.innerText = "Read less";
+                button.dataset.expanded = "true";
+            }
+        } catch (e) {
+            console.error("Error in toggleReadMore:", e);
+        }
+    }
+</script>
+{% endblock %}

@@ -19,16 +19,6 @@
         </div>
     </a>
     {% endfor %}
-    <a href="{% url 'kompilasi_peraturan' %}" class="block">
-        <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto {% if kategori.is_mobile_hidden %}lg:flex hidden{% endif %}">
-            <div class="bg-shortMenuIcon rounded-bl-lg w-16 sm:w-24 h-28 sm:h-full flex-none flex items-center justify-center">
-                <img src="{% static 'img/dash/law-book.png' %}" alt="Default Icon" class="max-h-10 sm:max-h-16">
-            </div>
-            <div class="text-xs lg:text-xl 2xl:text-2xl 3xl:text-3xl p-3 sm:p-5 mx-auto text-center">
-                Kompilasi Peraturan Pesantren
-            </div>
-        </div>
-    </a>
 </div>
 
 <hr class="mt-20 mb-2 border-t-4 border-black" />

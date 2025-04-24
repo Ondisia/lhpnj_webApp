@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Peraturan, KategoriPeraturan, Kompilasi
 from .forms import PencarianForm
 from django.db.models import Q, Count
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import json
 
@@ -18,27 +17,16 @@ def login_user(request):
 
         if user:
             login(request, user)
-            return redirect('after_login')
+            return redirect('dashboard')
         else:
             messages.error(request, "Username atau password salah")
     return render(request, 'login.html', {'title': 'Login LHP Pondok Pesantren Nurul Jadid'})
 
-@login_required
-def after_login(request):
-    if request.user.groups.filter(name="pegawai-pesantren").exists():
-        return redirect('/')  # atau halaman khusus pegawai
-    elif request.user.is_staff:
-        return redirect('/admin/')
-    else:
-        return redirect('dashboard')
-
-
 def dashboard(request):
     kategori_list = KategoriPeraturan.objects.all()
-
     
     # Filter berdasarkan hak akses user
-    if request.user.is_authenticated and request.user.groups.filter(name='pegawai').exists():
+    if request.user.is_authenticated and request.user.groups.filter(name='pegawai-pesantren').exists():
         peraturan_terbaru = Peraturan.objects.order_by('-created_at')[:5]
     else:
         peraturan_terbaru = Peraturan.objects.filter(hanya_untuk_pegawai=False).order_by('-created_at')[:5]
@@ -53,18 +41,47 @@ def dashboard(request):
     return render(request, "dashboard.html", jeda)
 
 
-def profil_lembaga(request):
+def latar_belakang(request):
     jeda = {
-        'title': "Profil Lembaga Hukum Pondok Pesantren Nurul Jadid",
+        'title': "Latar Belakang Lembaga Hukum Pondok Pesantren Nurul Jadid",
         'menu': 'profil-lembaga',
     }
-    return render(request, "profil_lembaga.html", jeda)
+    return render(request, "latar_belakang.html", jeda)
+
+def visi_misi(request):
+    jeda = {
+        'title': "Visi Misi Lembaga Hukum Pondok Pesantren Nurul Jadid",
+        'menu': 'profil-lembaga',
+    }
+    return render(request, "visi_misi.html", jeda)
+
+def dasar_hukum(request):
+    jeda = {
+        'title': "Dasar Hukum LHP PP Nurul Jadid",
+        'menu': 'profil-lembaga',
+    }
+    return render(request, 'dasar_hukum.html', jeda)
+
+def organisasi(request):
+    jeda = {
+        'title': "Organisasi LHP PP Nurul Jadid",
+        'menu': "profil-lembaga",
+    }
+    return render(request, "organisasi.html", jeda)
+
+def mekanisme_regulasi(request):
+    jeda = {
+        'title': "Mekanisme dan Regulasi LHP PP Nurul Jadid",
+        'menu': "profil-lembaga",
+    }
+    return render(request, "mekanisme.html", jeda)
+
 
 def daftar_peraturan(request, kode_peraturan):
     kategori = get_object_or_404(KategoriPeraturan, kode=kode_peraturan.upper())
 
     # Filter berdasarkan hak akses user
-    if request.user.is_authenticated and request.user.groups.filter(name='pegawai').exists():
+    if request.user.is_authenticated and request.user.groups.filter(name='pegawai-pesantren').exists():
         peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori).order_by('-id')
     else:
         peraturan_list = Peraturan.objects.filter(kategori_peraturan=kategori, hanya_untuk_pegawai=False).order_by('-id')
@@ -102,6 +119,7 @@ def kompilasi_peraturan(request):
         'kompilasi_list': kompilasi,
     }
     return render(request, "kompilasi_peraturan.html", jeda)
+
 
 def daftar_peraturan_kompilasi(request, kompilasi):
     kompilasi = get_object_or_404(Kompilasi, slug=kompilasi)

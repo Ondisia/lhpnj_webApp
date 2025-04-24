@@ -13,9 +13,18 @@
     <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'dashboard' %}bg-white text-gray-900 font-bold {% endif %}">
       <a href="{% url 'dashboard' %}" class="block py-2 ml-6">Beranda</a>
     </li>
-    <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'profil-lembaga' %}bg-white text-gray-900 font-bold {% endif %}">
-      <a href="{% url 'profil_lembaga' %}" class="block py-2 ml-6">Profil</a>
+    <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'profil-lembaga' %}bg-white text-gray-900 font-bold{% endif %}">
+      <a href="#" onclick="toggleSidebarSubMenu(event, 'sidebar-submenu-profil')" class="block py-2 ml-6">Profil</a>
+      <ul id="sidebar-submenu-profil" class="pl-6 space-y-2 hidden pb-3 max-h-64 overflow-y-auto">
+        <li><a href="{% url 'profil_latar_belakang' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Tentang Latar Belakang</a></li>
+        <li><a href="{% url 'profil_visi_misi' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Tujuan, Visi & Misi</a></li>
+        <li><a href="{% url 'profil_dasar_hukum' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Dasar Hukum</a></li>
+        <li><a href="{% url 'profil_organisasi' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Organisasi</a></li>
+        <li><a href="{% url 'profil_mekanisme_regulasi' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Mekanisme & Regulasi</a></li>
+      </ul>
     </li>
+    
+       
     <li class="hover:bg-white hover:text-gray-900 hover:font-bold {% if menu == 'kategori-peraturan' and request.path != '/kategori-peraturan/rh/' %}bg-white text-gray-900 font-bold {% endif %}">
       <a href="#" onclick="toggleSidebarSubMenu(event, 'sidebar-submenu-dokumen')" class="block py-2 ml-6">Dokumen Hukum</a>
       <ul id="sidebar-submenu-dokumen" class="pl-6 space-y-2 hidden pb-3 max-h-64 overflow-y-auto">
@@ -23,8 +32,9 @@
         <li><a href="{% url 'daftar_peraturan' 'pkp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Peraturan Kepala Pesantren</a></li>
         <li><a href="{% url 'daftar_peraturan' 'pbb' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Peraturan Biro, Badan & Banom</a></li>
         <li><a href="{% url 'daftar_peraturan' 'psp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Peraturan Satuan Pendidikan</a></li>
+        <li><a href="{% url 'daftar_peraturan' 'nk' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Nota Kesepahaman (MoU)</a></li>
         <li><a href="{% url 'daftar_peraturan' 'sop' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Standard Operating Procedure</a></li>
-        <li><a href="{% url 'daftar_peraturan' 'kpp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Kompilasi Peraturan Pesantren</a></li>
+        <li><a href="{% url 'kompilasi_peraturan' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Kompilasi Peraturan Pesantren</a></li>
         <li><a href="{% url 'daftar_peraturan' 'kp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Keputusan Pimpinan</a></li>
         <li><a href="{% url 'daftar_peraturan' 'lp' %}" class="block py-2 hover:text-gray-900 hover:bg-white hover:font-bold">Lembar Pesantren</a></li>
       </ul>

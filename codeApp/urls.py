@@ -1,23 +1,26 @@
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-from .views import *
+from . import views
 
 urlpatterns = [
     
-    path('', dashboard, name="dashboard"),
+    path('', views.dashboard, name='dashboard'),
 
-    path('profil-lembaga-hukum-pondok-pesantren-nurul-jadid/', profil_lembaga, name='profil_lembaga'),
+    path('latar-belakang-lhpnj/', views.latar_belakang, name='profil_latar_belakang'),
+    path('visi-misi-lhpnj/', views.visi_misi, name='profil_visi_misi'),
+    path('dasar-hukum-lhpnj/', views.dasar_hukum, name='profil_dasar_hukum'),
+    path('organisasi-lhpnj/', views.organisasi, name='profil_organisasi'),
+    path('mekanisme-regulasi-lhpnj/', views.mekanisme_regulasi, name='profil_mekanisme_regulasi'),
 
-    path('kategori-peraturan/<str:kode_peraturan>/', daftar_peraturan, name='daftar_peraturan'),
+    path('kategori-peraturan/<str:kode_peraturan>/', views.daftar_peraturan, name='daftar_peraturan'),
 
-    path("cari/", cari_peraturan, name="cari_peraturan"),
+    path('cari/', views.cari_peraturan, name='cari_peraturan'),
 
-    path('kompilasi-peraturan-pesantren/', kompilasi_peraturan, name='kompilasi_peraturan'),
+    path('kompilasi-peraturan-pesantren/', views.kompilasi_peraturan, name='kompilasi_peraturan'),
 
-    path('daftar-peraturan-<str:kompilasi>/', daftar_peraturan_kompilasi, name='daftar_peraturan_kompilasi'),
+    path('daftar-peraturan-<str:kompilasi>/', views.daftar_peraturan_kompilasi, name='daftar_peraturan_kompilasi'),
 
     # Login & Logout
-    path('login/', login_user, name='login'),
+    path('login/', views.login_user, name='login'),
     path('logout/', LogoutView.as_view(next_page='dashboard'), name='logout'),
-    path('after-login/', after_login, name='after_login'),
 ]
