@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="grid grid-cols-2 mt-10 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
+<div class="grid grid-cols-2 mt-6 mb-4 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4 px-6 sm:px-12 md:px-20">
     {% for kategori in kategori_list %}
     <a href="{% url 'daftar_peraturan' kategori.kode|lower %}" class="block">
         <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto {% if kategori.is_mobile_hidden %}lg:flex hidden{% endif %}">

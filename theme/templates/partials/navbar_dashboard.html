@@ -1,249 +1,190 @@
 {% load static %}
 <nav class="md:mt-10 3xl:-space-x-10 mx-auto md:px-8 lg:px-12">
-  {% if menu == 'dashboard' %}
-    <div class="w-full max-w-screen-3xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray sm:h-80 h-64 md:rounded-lg">
-  {% else %}
-    <div class="w-full max-w-screen-3xl mx-auto bg-gradient-to-r from-navBlue via-navBlueLight to-navGray h-40 md:rounded-lg">
-  {% endif %}
+  <div class="w-full max-w-screen-3xl mx-auto bg-no-repeat md:rounded-[10px] md:aspect-[4/1] aspect-[3/1] mb-3" style="background-image: url('{% static 'img/LHP.jpg' %}'); background-size: cover; background-position: center;"></div>
+  <div class="relative flex items-center justify-between h-2 sm:h-12">
+    <div class="flex-1 flex items-center md:justify-center">
+      <div class="hidden md:flex">
+        <ul class="flex items-center space-x-4">
+          <!-- Beranda -->
+          <li>
+            <a href="{% url 'dashboard' %}" class="px-3 rounded-md text-lg font-medium
+              {% if menu == 'dashboard' %} bg-navBlue text-white py-1 {% else %} text-navBlue {% endif %}
+              hover:bg-navBlue hover:text-white hover:py-1">
+              Beranda
+            </a>
+          </li>
 
-    <div class="relative flex items-center justify-between h-16">
-      <div class="flex-1 flex items-center md:items-stretch md:justify-start">
-        <div class="flex items-center md:ml-12 ml-5">
-          <img src="{% static 'img/nj.png' %}" alt="Logo" class="mt-12 md:h-20 md:w-20 h-16 w-16" />
-          <a href="{% url 'dashboard' %}" class="text-white mt-12 px-3 rounded-md text-xl font-medium lg:text-2xl" style="font-family: 'Rakkas'">
-            <span>LHP</span>
-            <span style="display: block; height: 0.3em"></span>
-            PP. Nurul Jadid
-          </a>
-        </div>
-        <div class="sm:hidden hidden md:block md:ml-auto mt-20 pr-10">
-          <ul class="flex space-x-4">
-            <li>
-              <a
-                href="{% url 'dashboard' %}"
-                class="px-3 rounded-md text-lg font-medium
-                  {% if menu == 'dashboard' %} 
-                    bg-white text-navBlue py-1
-                  {% else %} 
-                    text-white
-                  {% endif %}
-                hover:bg-white hover:text-navBlue hover:py-1"
-                >
-                Beranda
-              </a>
-            </li>
-            <li class="relative" id="profil-dropdown-container">
-              <a
-                href="#"
-                onclick="toggleNavbarSubMenu(event, 'submenu-profil')"
-                class="px-3 rounded-md text-lg font-medium
-                  {% if menu == 'profil-lembaga' %} 
-                    bg-white text-navBlue py-1
-                  {% else %} 
-                    text-white
-                  {% endif %}
-                hover:bg-white hover:text-navBlue hover:py-1"
-                >Profil
-              </a>
-              <ul id="submenu-profil" class="absolute left-0 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-80 z-50">
-                <li>
-                  <a href="{% url 'profil_latar_belakang' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Tentang Latar Belakang</a>
-                </li>
-                <li>
-                  <a href="{% url 'profil_visi_misi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Tujuan, Visi & Misi</a>
-                </li>
-                <li>
-                  <a href="{% url 'profil_dasar_hukum' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Dasar Hukum</a>
-                </li>
-                <li>
-                  <a href="{% url 'profil_organisasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Organisasi</a>
-                </li>
-                <li>
-                  <a href="{% url 'profil_mekanisme_regulasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Mekanisme & Regulasi</a>
-                </li>
-              </ul>
-            </li>            
-            <li class="relative" id="dropdown-container">
-              <a
-                href="#"
-                onclick="toggleNavbarSubMenu(event, 'submenu-dokumen')"
-                class="px-3 rounded-md text-lg font-medium
-                  {% if menu == 'kategori-peraturan' and request.path != '/kategori-peraturan/rh/' %} 
-                  bg-white text-navBlue py-1
-                  {% else %} 
-                  text-white
-                  {% endif %}
-                hover:bg-white hover:text-navBlue hover:py-1"
-                >Dokumen Hukum
-              </a>
-              <ul id="submenu-dokumen" class="absolute left-0 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-96 z-50">
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'kdp' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/kdp/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Keputusan Dewan Pengasuh & Pengasuh
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'pkp' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/pkp/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Peraturan Kepala Pesantren
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'pbb' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/pbb/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Peraturan Biro, Badan & Banom
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'psp' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/psp/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Peraturan Satuan Pendidikan
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'nk' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/nk/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Nota Kesepahaman (MoU)
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'sop' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/sop/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Standard Operating Procedure
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'kp' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/kp/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Keputusan Pimpinan
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'daftar_peraturan' 'lp' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/lp/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Lembar Pesantren
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="{% url 'kompilasi_peraturan' %}" 
-                    class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                      {% if request.path == '/kategori-peraturan/lp/' %}
-                      bg-gray-500 text-white py-1
-                      {% else %} 
-                        text-gray-900
-                      {% endif %}"
-                    >
-                    Kompilasi Peraturan Pesantren
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a
-                href="{% url 'daftar_peraturan' 'rh' %}"
-                class="px-3 rounded-md text-lg font-medium
-                  {% if request.path == '/kategori-peraturan/rh/' %}
-                    bg-white text-navBlue py-1
-                  {% else %} 
-                    text-white
-                  {% endif %}
-                hover:bg-white hover:text-navBlue hover:py-1"
-                >
-                Rancangan Hukum
-              </a>
-            </li>
-            <li>
-              {% if user.is_authenticated %}
-                <form action="{% url 'logout' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="px-3 rounded-md text-lg font-medium text-white">
-                    Logout
-                  </button>
-                </form>
-              {% else %}
-                <a href="{% url 'login' %}" class="px-3 rounded-md text-lg font-medium text-white">
-                  Login
+          <!-- Profil Dropdown -->
+          <li class="relative" id="profil-dropdown-container">
+            <a href="#" onclick="toggleNavbarSubMenu(event, 'submenu-profil')" class="px-3 rounded-md text-lg font-medium
+              {% if menu == 'profil-lembaga' %} bg-navBlue text-white py-1 {% else %} text-navBlue {% endif %}
+              hover:bg-navBlue hover:text-white hover:py-1">
+              Profil
+            </a>
+            <ul id="submenu-profil" class="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-80 z-50">
+              <li><a href="{% url 'profil_latar_belakang' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Tentang Latar Belakang</a></li>
+              <li><a href="{% url 'profil_visi_misi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Tujuan, Visi & Misi</a></li>
+              <li><a href="{% url 'profil_dasar_hukum' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Dasar Hukum</a></li>
+              <li><a href="{% url 'profil_organisasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Organisasi</a></li>
+              <li><a href="{% url 'profil_mekanisme_regulasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Mekanisme & Regulasi</a></li>
+            </ul>
+          </li>
+
+          <!-- Dokumen Hukum Dropdown -->
+          <li class="relative" id="dropdown-container">
+            <a href="#" onclick="toggleNavbarSubMenu(event, 'submenu-dokumen')" class="px-3 rounded-md text-lg font-medium
+              {% if menu == 'kategori-peraturan' and request.path != '/kategori-peraturan/rh/' %} bg-navBlue text-white py-1 {% else %} text-navBlue {% endif %}
+              hover:bg-navBlue hover:text-white hover:py-1">
+              Dokumen Hukum
+            </a>
+            <ul id="submenu-dokumen" class="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-96 z-50">
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'kdp' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/kdp/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Keputusan Dewan Pengasuh & Pengasuh
                 </a>
-              {% endif %}
-            </li>            
-          </ul>
-        </div>
-        <button type="button" class="md:hidden text-white mt-10 text-2xl flex ml-auto mr-10" onclick="toggleSidebar()">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
-    <hr class="mt-12 border-t-4 border-white" />
+              </li>
 
-    
-    {% if menu == 'dashboard' %}
-    <form action="#" method="GET" id="navbar-search-form" class="sm:mt-12 mt-5 flex justify-center relative" onsubmit="return false;">
-      <div class="relative w-4/6 md:w-3/6">
-          <input type="text" id="search-input" name="q" placeholder="Cari peraturan..." class="px-3 py-2 pr-10 rounded-md text-lg w-full border border-gray-300 focus:ring focus:ring-blue-300" autocomplete="off" />
-          <button type="button" id="clear-search" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
-              <i class="fas fa-times"></i>
-          </button>
-          <div id="search-results" class="absolute bg-white w-full mt-1 shadow-lg rounded-md hidden z-50"></div>
+              <li>
+                <a href="{% url 'daftar_peraturan' 'pkp' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/pkp/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Peraturan Kepala Pesantren
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'pbb' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/pbb/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Peraturan Biro, Badan & Banom
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'psp' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/psp/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Peraturan Satuan Pendidikan
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'nk' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/nk/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Nota Kesepahaman (MoU)
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'sop' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/sop/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Standard Operating Procedure
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'kp' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/kp/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Keputusan Pimpinan
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'daftar_peraturan' 'lp' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kategori-peraturan/lp/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Lembar Pesantren
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'kompilasi_peraturan' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/kompilasi-peraturan/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Kompilasi Peraturan Pesantren
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+          <!-- Rancangan Hukum -->
+          <li>
+            <a href="{% url 'daftar_peraturan' 'rh' %}" class="px-3 rounded-md text-lg font-medium
+              {% if request.path == '/kategori-peraturan/rh/' %} bg-navBlue text-white py-1 {% else %} text-navBlue {% endif %}
+              hover:bg-navBlue hover:text-white hover:py-1">
+              Rancangan Hukum
+            </a>
+          </li>
+
+          <!-- Login/Logout -->
+          <li>
+            {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="px-3 rounded-md text-lg font-medium text-navBlue hover:bg-navBlue hover:text-white hover:py-1">
+                Logout
+              </button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}" class="px-3 rounded-md text-lg font-medium text-navBlue hover:bg-navBlue hover:text-white hover:py-1">
+              Login
+            </a>
+            {% endif %}
+          </li>
+
+        </ul>
       </div>
-    </form>
-    {% endif %}
+      <!-- Hamburger Button for Mobile -->
+      <button type="button" class="md:hidden text-navBlueLight flex ml-auto mr-6 text-2xl" style="margin-top: -15rem" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
   </div>
+
+  <!-- Search Box di Dashboard -->
+  {% if menu == 'dashboard' %}
+  <form action="#" method="GET" id="navbar-search-form" class="sm:mt-2 flex justify-center relative" onsubmit="return false;">
+    <div class="relative w-4/6 md:w-3/6">
+      <input type="text" id="search-input" name="q" placeholder="Cari peraturan..." class="px-3 py-2 pr-10 rounded-md text-lg w-full border border-gray-300 focus:ring focus:ring-blue-300" autocomplete="off" />
+      <button type="button" id="clear-search" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+        <i class="fas fa-times"></i>
+      </button>
+      <div id="search-results" class="absolute bg-white w-full mt-1 shadow-lg rounded-md hidden z-50"></div>
+    </div>
+  </form>
+  {% endif %}
 </nav>
