@@ -22,11 +22,57 @@
               Profil
             </a>
             <ul id="submenu-profil" class="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white text-navBlue rounded-md shadow-lg hidden w-80 z-50">
-              <li><a href="{% url 'profil_latar_belakang' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Tentang Latar Belakang</a></li>
-              <li><a href="{% url 'profil_visi_misi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Tujuan, Visi & Misi</a></li>
-              <li><a href="{% url 'profil_dasar_hukum' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Dasar Hukum</a></li>
-              <li><a href="{% url 'profil_organisasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Organisasi</a></li>
-              <li><a href="{% url 'profil_mekanisme_regulasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white">Mekanisme & Regulasi</a></li>
+              <li>
+                <a href="{% url 'profil_latar_belakang' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/latar-belakang-lhpnj/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Tentang Latar Belakang
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'profil_visi_misi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/visi-misi-lhpnj/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Tujuan, Visi & Misi
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'profil_dasar_hukum' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/dasar-hukum-lhpnj/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Dasar Hukum
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'profil_organisasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/organisasi-lhpnj/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Organisasi
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'profil_mekanisme_regulasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
+                  {% if request.path == '/mekanisme-regulasi-lhpnj/' %}
+                  bg-gray-500 text-white py-1
+                  {% else %}
+                  text-gray-900
+                  {% endif %}">
+                  Mekanisme & Regulasi
+                </a>
+              </li>
             </ul>
           </li>
 

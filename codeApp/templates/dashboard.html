@@ -6,16 +6,16 @@
     {% for kategori in kategori_list %}
     <a href="{% url 'daftar_peraturan' kategori.kode|lower %}" class="block">
         <div class="bg-shortMenu min-h-28 sm:h-32 rounded-b-lg flex items-center w-auto {% if kategori.is_mobile_hidden %}lg:flex hidden{% endif %}">
-            <div class="bg-shortMenuIcon rounded-bl-lg w-16 sm:w-24 h-28 sm:h-full flex-none flex items-center justify-center">
+            <div class="bg-shortMenuIcon rounded-bl-lg w-14 sm:w-24 h-28 sm:h-full flex-none flex items-center justify-center">
                 {% if kategori.icon %}
                     <img src="{{ kategori.icon.url }}" alt="{{ kategori.nama }}" class="max-h-10 sm:max-h-16">
                 {% else %}
                     <img src="{% static 'img/nj.png' %}" alt="Default Icon" class="max-h-10 sm:max-h-16">
                 {% endif %}
             </div>
-            <div class="text-xs lg:text-xl 2xl:text-2xl 3xl:text-3xl p-3 sm:p-5 mx-auto text-center">
-            {{ kategori.nama }}
-            </div>
+            <div class="text-xs lg:text-xl 2xl:text-2xl 3xl:text-3xl p-2 sm:p-5 mx-auto text-center break-words w-28 md:w-96">
+                {{ kategori.nama }}
+            </div>            
         </div>
     </a>
     {% endfor %}
