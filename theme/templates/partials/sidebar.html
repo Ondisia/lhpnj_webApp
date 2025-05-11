@@ -43,7 +43,18 @@
       <a href="{% url 'daftar_peraturan' 'rh' %}" class="block py-2 ml-6">Rancangan Hukum</a>
     </li>
     <li class="hover:bg-white hover:text-gray-900 hover:font-bold">
-      <a href="{% url 'admin:index' %}" class="block py-2 ml-6">Login</a>
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="block py-2 ml-6">
+                    Logout
+                </button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="block py-2 ml-6">
+                Login
+            </a>
+        {% endif %}
     </li>
   </ul>
 </div>
