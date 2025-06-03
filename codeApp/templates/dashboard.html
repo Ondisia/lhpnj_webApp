@@ -40,7 +40,7 @@
             {% for peraturan in peraturan_terbaru %}
             <tr class="text-black border-b-2 border-gray-600 text-justify">
                 <td style="width: 85%;" class="px-4 md:px-0 md:pr-10">
-                <p class="font-bold text-xs sm:text-lg mb-2">{{ peraturan.nama_peraturan }}</p>
+                <p class="font-bold text-xs sm:text-lg mb-2">{{ peraturan.kategori_peraturan.nama }} Nomor {{ peraturan.nomor_peraturan }} Tahun {{ peraturan.tahun }} Tentang {{ peraturan.nama_peraturan }}</p>
                 <p class="text-sm sm:text-base hidden md:block">
                     {{ peraturan.teks_pdf|truncatewords:60 }}
                 </p>

@@ -58,14 +58,31 @@ function toggleSidebarSubMenu(event, submenuId) {
   submenu.classList.toggle('hidden');
 }
 
-document.addEventListener('click', function(event) {
-  const sidebar = document.getElementById('sidebar');
-
-  // Cek apakah klik di luar sidebar
-  if (!sidebar.contains(event.target)) {
-    // Tutup semua submenu
-    document.querySelectorAll('#sidebar ul ul').forEach(submenu => {
-      submenu.classList.add('hidden');
-    });
-  }
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('translate-x-full');
+    sidebar.classList.toggle('translate-x-0');
+}
+    
+function toggleSidebarSubMenu(event, submenuId) {
+    event.preventDefault();
+    const submenu = document.getElementById(submenuId);
+    submenu.classList.toggle('hidden');
+}
+    
+      // Menutup submenu saat klik di luar sidebar
+document.addEventListener('click', function (event) {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = event.target.closest('button');
+    
+        // Jangan tutup jika klik dalam sidebar atau tombol
+    if (!sidebar.contains(event.target) && !toggleButton) {
+        document.querySelectorAll('#sidebar ul ul').forEach(submenu => {
+        submenu.classList.add('hidden');
+        });
+    
+// Sembunyikan sidebar
+    sidebar.classList.remove('translate-x-0');
+      sidebar.classList.add('translate-x-full');
+    }
 });

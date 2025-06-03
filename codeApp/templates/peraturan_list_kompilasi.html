@@ -46,7 +46,7 @@
                             <td class="p-3 border text-center w-10 text-xs md:text-base">{{ peraturan_list.start_index|add:forloop.counter0 }}</td>
                             <td class="p-3 border">
                                 <div class="flex flex-col text-justify">
-                                    <span class="font-semibold text-xs md:text-base">{{ peraturan.nama_peraturan }}</span>
+                                    <span class="font-semibold text-xs md:text-base">{{ peraturan.kategori_peraturan.nama }} Nomor {{ peraturan.nomor_peraturan }} Tahun {{ peraturan.tahun }} Tentang {{ peraturan.nama_peraturan }}</span>
                                     <hr class="my-2 border-t-2 border-gray-900">
                                     <span class="text-gray-600 text-xs md:text-sm" id="teksPdf{{ forloop.counter }}">
                                         {{ peraturan.teks_pdf|truncatewords:20 }}

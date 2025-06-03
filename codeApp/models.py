@@ -1,6 +1,8 @@
 from django.db import models
 import fitz  # PyMuPDF
 from django.utils.text import slugify
+from django.contrib.auth.models import User
+
 
 class KategoriPeraturan(models.Model):
     kode = models.CharField(max_length=10, unique=True)
@@ -13,6 +15,20 @@ class KategoriPeraturan(models.Model):
     
     class Meta:
         verbose_name_plural = "Kategori Peraturan"
+
+
+class KategoriAccessUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    kategori = models.ForeignKey(KategoriPeraturan, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'kategori')
+        verbose_name = "Akses Kategori Peraturan"
+        verbose_name_plural = "Akses Kategori Peraturan"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.kategori.nama}"
+
 
 class Kompilasi(models.Model):
     nama = models.CharField(max_length=255, unique=True)
@@ -36,13 +52,13 @@ class Peraturan(models.Model):
         ('tidak berlaku', 'Tidak Berlaku'),
     ]
 
-    nomor_peraturan = models.CharField(max_length=50, default='-')
-    nama_peraturan = models.CharField(max_length=255)
     kategori_peraturan = models.ForeignKey(KategoriPeraturan, on_delete=models.SET_NULL, null=True, blank=True)
+    nomor_peraturan = models.CharField(max_length=50, default='-')
+    tahun = models.IntegerField(blank=True, null=True)
+    nama_peraturan = models.CharField(max_length=255, help_text="Tentang apa peraturan ini?")
     kompilasi = models.ForeignKey(Kompilasi, on_delete=models.SET_NULL, null=True, blank=True)
     hanya_untuk_pegawai = models.BooleanField(default=False, help_text="Centang jika peraturan hanya untuk pegawai pesantren")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='berlaku')
-    tahun = models.IntegerField(blank=True, null=True)
     file_abstract = models.FileField(upload_to="abstracts/", blank=True, null=True)
     file_pdf = models.FileField(upload_to="peraturan/")
     teks_pdf = models.TextField(blank=True, null=True)
