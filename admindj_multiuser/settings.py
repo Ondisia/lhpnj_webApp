@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-@f02^)1$z=d&nxynk61*j19ok46*do#3gg(yt6rt1yw(56$sxh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['117.102.75.215']
 
 
 # Application definition
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 ]
 
 TAILWIND_APP_NAME = 'theme'
-NPM_BIN_PATH = "E:/laragon/bin/nodejs/node-v18/npm.cmd"
+# NPM_BIN_PATH = "E:/laragon/bin/nodejs/node-v18/npm.cmd"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
