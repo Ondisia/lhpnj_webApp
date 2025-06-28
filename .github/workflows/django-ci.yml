@@ -77,7 +77,9 @@ jobs:
         script: |
           echo "📥 Pulling latest code from GitHub..."
           cd /home/django_project/lhpnj_webApp
-          git pull origin master
+          git reset --hard HEAD
+          git clean -fd
+          git pull bakso master
 
           echo "⚙️ Activating virtual environment..."
           source env/bin/activate
