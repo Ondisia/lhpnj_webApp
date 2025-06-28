@@ -76,11 +76,11 @@ jobs:
         key: ${{ secrets.VPS_SSH_KEY }}
         script: |
           echo "📥 Pulling latest code from GitHub..."
-          cd /home/django_project/lhpnj_web
+          cd /home/django_project/lhpnj_webApp
           git pull origin master
 
           echo "⚙️ Activating virtual environment..."
-          source venv/bin/activate
+          source env/bin/activate
 
           echo "🧱 Running migrations..."
           python manage.py migrate
