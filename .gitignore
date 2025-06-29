@@ -3,3 +3,6 @@ env
 
 # Ignore Django staticfiles (collected)
 staticfiles/
+
+# Ignore media
+media/
