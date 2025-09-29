@@ -1,6 +1,6 @@
 {% load static %}
 <nav class="md:mt-10 3xl:-space-x-10 mx-auto md:px-8 lg:px-12">
-  <div class="w-full max-w-screen-3xl mx-auto bg-no-repeat md:rounded-[10px] md:aspect-[4/1] aspect-[3/1] mb-3" style="background-image: url('{% static 'img/LHP.jpg' %}'); background-size: cover; background-position: center;"></div>
+  <div class="w-full max-w-screen-3xl mx-auto bg-no-repeat md:rounded-[10px] md:aspect-[4/1] aspect-[3/1] mb-3" style="background-image: url('{% static 'img/re-lhp.jpg' %}'); background-size: cover; background-position: center;" loading="lazy"></div>
   <div class="relative flex items-center justify-between h-2 sm:h-12">
     <div class="flex-1 flex items-center md:justify-center">
       <div class="hidden md:flex">
@@ -51,26 +51,6 @@
                   text-gray-900
                   {% endif %}">
                   Dasar Hukum
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'profil_organisasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                  {% if request.path == '/organisasi-lhpnj/' %}
-                  bg-gray-500 text-white py-1
-                  {% else %}
-                  text-gray-900
-                  {% endif %}">
-                  Organisasi
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'profil_mekanisme_regulasi' %}" class="block px-4 py-2 hover:bg-gray-500 hover:text-white
-                  {% if request.path == '/mekanisme-regulasi-lhpnj/' %}
-                  bg-gray-500 text-white py-1
-                  {% else %}
-                  text-gray-900
-                  {% endif %}">
-                  Mekanisme & Regulasi
                 </a>
               </li>
             </ul>
@@ -189,25 +169,23 @@
 
           <!-- Rancangan Hukum -->
           <li>
-            <a href="{% url 'daftar_peraturan' 'rh' %}" class="px-3 rounded-md text-lg font-medium
-              {% if request.path == '/kategori-peraturan/rh/' %} bg-navBlue text-white py-1 {% else %} text-navBlue {% endif %}
-              hover:bg-navBlue hover:text-white hover:py-1">
-              Rancangan Hukum
+            <a href="#" class="px-3 rounded-md text-lg font-medium text-navBlue hover:bg-navBlue hover:text-white hover:py-1">
+              Lembar Pesantren
             </a>
           </li>
 
           <!-- Login/Logout -->
           <li>
             {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post">
+            <form action="{% url 'logout' %}" method="post" class="inline">
               {% csrf_token %}
-              <button type="submit" class="px-3 rounded-md text-lg font-medium text-navBlue hover:bg-navBlue hover:text-white hover:py-1">
-                Logout
+              <button type="submit" class="px-3 rounded-md bg-navBlue text-lg font-medium text-white flex items-center" title="Logout">
+                <i class="fas fa-user" style="margin-top: 6px; margin-bottom: 6px;"></i>
               </button>
             </form>
             {% else %}
-            <a href="{% url 'login' %}" class="px-3 rounded-md text-lg font-medium text-navBlue hover:bg-navBlue hover:text-white hover:py-1">
-              Login
+            <a href="{% url 'login' %}" class="px-3 rounded-md bg-navBlue text-lg font-medium text-white flex items-center" title="Login">
+              <i class="fas fa-user" style="margin-top: 6px; margin-bottom: 6px;"></i>
             </a>
             {% endif %}
           </li>
@@ -234,3 +212,4 @@
   </form>
   {% endif %}
 </nav>
+

@@ -5,10 +5,16 @@ from django.contrib.auth.models import User
 
 
 class KategoriPeraturan(models.Model):
-    kode = models.CharField(max_length=10, unique=True)
+    kode = models.CharField(max_length=50, unique=True, editable=False)
     nama = models.CharField(max_length=255)
     icon = models.ImageField(upload_to='icons/', null=True, blank=True)
     is_mobile_hidden = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        # generate kode dari slug nama
+        if not self.kode or self.nama != KategoriPeraturan.objects.filter(pk=self.pk).values_list("nama", flat=True).first():
+            self.kode = slugify(self.nama)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.nama} ({self.kode})"
@@ -86,3 +92,42 @@ def extract_text_from_pdf(sender, instance, **kwargs):
             instance.save(update_fields=['teks_pdf'])
         except Exception as e:
             print(f"Error extracting text: {e}")
+
+
+class RancanganPeraturan(models.Model):
+    STATUS_CHOICES = [
+        ("draft", "Draft (baru diajukan)"),
+        ("dalam_review", "Dalam Review Admin"),
+        ("diterima", "Disetujui"),
+        ("ditolak", "Ditolak"),
+    ]
+
+    pengusul = models.ForeignKey(User, on_delete=models.CASCADE, related_name="rancangan_pengusul")
+    kategori_peraturan = models.ForeignKey(KategoriPeraturan, on_delete=models.SET_NULL, null=True, blank=True)
+    nama_rancangan = models.CharField(max_length=255)
+    deskripsi = models.TextField(blank=True, null=True)
+    file_rancangan = models.FileField(upload_to="rancangan/")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="draft")
+    catatan_admin = models.TextField(blank=True, null=True, help_text="Catatan verifikasi dari admin")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.nama_rancangan} - {self.get_status_display()}"
+
+    class Meta:
+        verbose_name = "Rancangan Peraturan"
+        verbose_name_plural = "Rancangan Peraturan"
+
+@receiver(post_save, sender=RancanganPeraturan)
+def convert_rancangan_to_peraturan(sender, instance, **kwargs):
+    if instance.status == "diterima":
+        if not Peraturan.objects.filter(nama_peraturan=instance.nama_rancangan).exists():
+            Peraturan.objects.create(
+                kategori_peraturan=instance.kategori_peraturan,
+                nama_peraturan=instance.nama_rancangan,
+                nomor_peraturan="-",
+                tahun=None,
+                file_pdf=instance.file_rancangan,
+                status="berlaku",
+            )

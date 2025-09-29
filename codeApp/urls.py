@@ -9,8 +9,6 @@ urlpatterns = [
     path('latar-belakang-lhpnj/', views.latar_belakang, name='profil_latar_belakang'),
     path('visi-misi-lhpnj/', views.visi_misi, name='profil_visi_misi'),
     path('dasar-hukum-lhpnj/', views.dasar_hukum, name='profil_dasar_hukum'),
-    path('organisasi-lhpnj/', views.organisasi, name='profil_organisasi'),
-    path('mekanisme-regulasi-lhpnj/', views.mekanisme_regulasi, name='profil_mekanisme_regulasi'),
 
     path('kategori-peraturan/<str:kode_peraturan>/', views.daftar_peraturan, name='daftar_peraturan'),
 

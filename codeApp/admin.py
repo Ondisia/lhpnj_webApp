@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Peraturan, KategoriPeraturan, Kompilasi, KategoriAccessUser
+from .models import Peraturan, KategoriPeraturan, Kompilasi, KategoriAccessUser, RancanganPeraturan
 
 class AdminBerkasPermissionMixin:
     """Mixin untuk membatasi akses hanya untuk superuser atau grup admin-berkas"""
@@ -66,8 +66,33 @@ class KategoriAccessUserAdmin(AdminBerkasPermissionMixin, admin.ModelAdmin):
         # Hanya tampilkan menu ini untuk superuser
         return request.user.is_superuser
 
+class RancanganPeraturanAdmin(admin.ModelAdmin):
+    list_display = ("nama_rancangan", "pengusul", "kategori_peraturan", "status", "created_at")
+    list_filter = ("status", "kategori_peraturan")
+    search_fields = ("nama_rancangan", "pengusul__username")
+    readonly_fields = ("pengusul", "created_at", "updated_at")
+
+    def save_model(self, request, obj, form, change):
+        # otomatis set pengusul jika user biasa yang tambah
+        if not obj.pk and not request.user.is_superuser and not request.user.groups.filter(name="admin-berkas").exists():
+            obj.pengusul = request.user
+        super().save_model(request, obj, form, change)
+
+    def has_module_permission(self, request):
+        # Semua user bisa mengajukan (tampil di menu), tapi hak akses beda
+        return True
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser or request.user.groups.filter(name="admin-berkas").exists():
+            return True  # admin LHP bisa ubah status
+        if obj and obj.pengusul == request.user and obj.status == "draft":
+            return True  # user hanya bisa edit draft mereka sendiri
+        return False
+
+
 
 admin.site.register(Peraturan, PeraturanAdmin)
 admin.site.register(KategoriPeraturan, KategoriPeraturanAdmin)
 admin.site.register(Kompilasi, KompilasiAdmin)
 admin.site.register(KategoriAccessUser, KategoriAccessUserAdmin)
+admin.site.register(RancanganPeraturan, RancanganPeraturanAdmin)
